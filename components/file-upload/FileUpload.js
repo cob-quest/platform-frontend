@@ -7,6 +7,7 @@ const FileUpload = () => {
     // Handle the uploaded files (e.g., send them to a server)
     acceptedFiles.forEach((file) => {
       console.log(`Uploaded file: ${file.name}`);
+      // upload to dest
     });
   };
 
