@@ -40,6 +40,13 @@ const CreatorTerminal = () => {
       );
       const newTab = window.open("/creator/create-challenge", "_blank");
       newTab.focus();
+    } else if (input === "cd"){
+      newOutput = (
+        <p>
+          <span className="user">[✔]</span> Starting participant mode....
+        </p>
+      );
+      router.push("/");
     } else if (input === "clear") {
       setHistory([]);
       setInput("");
@@ -106,7 +113,6 @@ const CreatorTerminal = () => {
         <span className="symbols">~$</span>
         <span className="commands"> welcome@creator</span>
       </span>
-      <p> </p>
       <p> welcome to cob </p>
       <p>cob is a ... </p>
       <p>

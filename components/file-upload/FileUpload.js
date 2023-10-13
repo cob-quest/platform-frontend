@@ -21,10 +21,10 @@ const FileUpload = () => {
     >
       <input {...getInputProps()} />
       {isDragActive ? (
-        <p>Drop the files here...</p>
+        <p>drop the files here...</p>
       ) : (
         <p>
-          Drag 'n' drop some ZIP files here, or click to select files{" "}
+          drag 'n' drop some ZIP files here, or click to select files{" "}
           <span>
             {" "}
             <CursorArrowRaysIcon className="h-4 w-4" />{" "}
