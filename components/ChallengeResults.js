@@ -160,11 +160,11 @@ import React from "react";
 import { UserPlusIcon, PaperAirplaneIcon } from "@heroicons/react/24/solid";
 
 const TABLE_HEAD = [
-  "Challenge",
-  "Participant",
-  "Status",
-  "Time and date",
-  "Re-send",
+  "challenge",
+  "participant",
+  "status",
+  "time and date",
+  "re-send",
 ];
 
 const TABLE_ROWS = [
@@ -213,7 +213,7 @@ const TABLE_ROWS = [
 
 function CustomTable() {
   return (
-    <table className="p-4 w-full min-w-max table-auto text-left text-white">
+    <table className="w-full min-w-max table-auto text-left text-white">
       <thead>
         <tr>
           {TABLE_HEAD.map((head) => (
@@ -277,16 +277,15 @@ export default function ChallengeResults() {
     <div className="h-full w-full">
       <div className="m-8 text-white  flex items-center justify-between gap-5">
         <div>
-          <h1 className="font-bold text-3xl">Overall Challenge Results</h1>
+          <h1 className="font-bold text-3xl">overall challenge results</h1>
         </div>
         <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-          <button className="border p-2 text-sm ">view all</button>
           <button
             className=" border p-2 flex items-center gap-2 p-2 text-sm"
             onClick={handleAddChallenge}
           >
             <UserPlusIcon className="h-4 w-4" />
-            Add challenge
+            add challenge
           </button>
         </div>
       </div>
