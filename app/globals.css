@@ -1,0 +1,183 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* @import url("https://fonts.googleapis.com/css2?family=M+PLUS+2&display=swap"); */
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #f15955;
+  border-radius: 4px;
+}
+
+body {
+  margin: 0;
+  padding-left: 10px;
+  background-color: #282a36;
+  color: #fff;
+  font-family: "Ubuntu Mono", monospace;
+  font-size: 18px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.App {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.terminal {
+  padding: 10px;
+  height: 100vh;
+}
+
+form {
+  margin-top: 5px;
+  display: inline-block;
+}
+
+input {
+  background: none;
+  border: none;
+  outline: none;
+  color: #fff;
+  display: inline-block;
+  font-family: "Ubuntu Mono", monospace;
+  font-size: 18px;
+}
+
+.spacing {
+  height: 10px;
+}
+
+.user,
+a {
+  color: #5dfa93;
+  margin-right: 12px;
+}
+
+.symbols {
+  color: white;
+}
+
+.ascii-art {
+  font-size: 10px;
+  margin: 0;
+}
+
+.commands {
+  color: #f15955;
+}
+
+.about p {
+  margin: 5px;
+}
+
+.help {
+  color: #cfd4e1c7;
+  margin: 3px 0px 0px 15px;
+}
+
+/* .skills {
+  color: rgb(235, 150, 97);
+}
+
+.skills-text {
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+.projects-head {
+  color: #5dfa93;
+  margin-left: 20px;
+  text-decoration: none;
+}
+
+.projects-content {
+  margin: 0;
+  color: rgba(255, 196, 160, 0.66);
+} */
+
+.terminal-spacing {
+  height: 200px;
+}
+
+.terminal-header {
+  background-color: #171717;
+  padding: 10px;
+  font-family: "Ubuntu Mono", monospace;
+  font-size: 16px;
+  border-top-left-radius: 5px; 
+  border-top-right-radius: 5px;
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  margin-bottom: 10px;
+}
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
