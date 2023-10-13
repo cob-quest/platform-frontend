@@ -1,12 +1,27 @@
 import FileUpload from "@/components/file-upload/FileUpload";
 import React from "react";
 
+
 export default function CreateChallenge() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
-      
-        <h1>ZIP File Upload</h1>
+    <main>
+      <div>
+        <h2 className="underline">
+          <i>ZIP File Upload</i>
+        </h2>
         <FileUpload />
+      </div>
+      <div>
+        <h2 className="underline">
+          <i>Enter time allocated for challenge</i>
+        </h2>
+        <p> Time format HH:MM </p>
+      </div>
+      <div>
+        <h2 className="underline">
+          <i>Enter the Email IDs of the Challenge Participants</i>
+        </h2>
+      </div>
     </main>
   );
 }

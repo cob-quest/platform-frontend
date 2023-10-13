@@ -34,7 +34,23 @@ export default function MainTerminal() {
         </p>
       );
       router.push("/participant");
-    } else if (input === "clear") {
+    } else if (input === "cd") {
+      // Check if there is a previous page URL
+      if (previousPage) {
+        // Navigate back to the previous page
+        router.push(previousPage);
+        newOutput = (
+          <p>
+            <span className="user">[✔]</span> Navigating back to the previous page...
+          </p>
+        );
+      } else {
+        newOutput = (
+          <p>
+            <span className="user">[✘]</span> There is no previous page to navigate to.
+          </p>
+        );
+      } } else if (input === "clear") {
       setHistory([]);
       setInput("");
       return;

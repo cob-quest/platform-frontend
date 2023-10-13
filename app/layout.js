@@ -11,7 +11,22 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={ptMono.className}>{children}</body>
+      <body className={ptMono.className}>
+        <div className="container">
+          <div className="menu">
+            {/* <div> 
+              cob
+            </div> */}
+            <div className="buttons-flex">
+              <div className="button red"></div>
+              <div className="button yellow"></div>
+              <div className="button green"></div>
+            </div>
+          </div>
+          
+          <div id="app"> {children} </div>
+        </div>
+      </body>
     </html>
   );
 }

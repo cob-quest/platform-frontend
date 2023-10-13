@@ -1,14 +1,14 @@
 "use client";
 import React, { useState } from "react";
 import Help from "./CreatorHelp";
-// import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const CreatorTerminal = () => {
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
   const [history, setHistory] = useState([]);
 
-  // const router = useRouter();
+  const router = useRouter();
 
   const handleInputChange = (e) => {
     setInput(e.target.value);
@@ -38,8 +38,7 @@ const CreatorTerminal = () => {
           <span className="user">[✔]</span> Opening challenge creation....
         </p>
       );
-      // router.push("/creator/create-challenge");
-      const newTab = window.open("/creator/manage-challenge", "_blank");
+      const newTab = window.open("/creator/create-challenge", "_blank");
       newTab.focus();
     } else if (input === "clear") {
       setHistory([]);
