@@ -2,7 +2,7 @@ import React from 'react'
 
 const CreateImage = () => {
   return (
-    <div>page</div>
+    <div>create image stuff</div>
   )
 }
 
