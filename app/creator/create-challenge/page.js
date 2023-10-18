@@ -7,9 +7,8 @@ export default function CreateChallenge() {
     <main>
       <div>
         <h2 className="underline">
-          <i>ZIP File Upload</i>
+          <i>Retrieve image</i>
         </h2>
-        <FileUpload />
       </div>
       <div>
         <h2 className="underline">

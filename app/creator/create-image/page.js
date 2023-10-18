@@ -1,9 +1,16 @@
-import React from 'react'
+import React from "react";
 
 const CreateImage = () => {
   return (
-    <div>create image stuff</div>
-  )
-}
+    <main>
+      <div>
+        <h2 className="underline">
+          <i>ZIP File Upload</i>
+        </h2>
+        <FileUpload />
+      </div>
+    </main>
+  );
+};
 
-export default CreateImage
+export default CreateImage;
