@@ -1,4 +1,5 @@
 import React from "react";
+import FileUpload from "@/components/file-upload/FileUpload";
 
 const CreateImage = () => {
   return (
