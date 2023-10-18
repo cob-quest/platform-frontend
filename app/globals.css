@@ -175,8 +175,6 @@ input{
   background-color: unset;
   color:rgb(238, 238, 238);
   width:100%;
-  font-size:16px;
-  font-family: 'Fira Code', monospace;
 }
 input:focus{
   border:none;
@@ -227,8 +225,6 @@ input {
   outline: none;
   color: #fff;
   display: inline-block;
-  font-family: "Ubuntu Mono", monospace;
-  font-size: 18px;
 }
 
 .spacing {
@@ -291,7 +287,6 @@ a {
 .terminal-header {
   background-color: #171717;
   padding: 10px;
-  font-family: "Ubuntu Mono", monospace;
   font-size: 16px;
   border-top-left-radius: 5px; 
   border-top-right-radius: 5px;

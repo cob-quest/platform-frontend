@@ -22,7 +22,15 @@ const CreatorTerminal = () => {
     let newOutput = "";
     if (input === "help") {
       newOutput = <Help />;
-    } else if (input === "manage") {
+    } else if (input === "create challenge") {
+      newOutput = (
+        <p>
+          <span className="user">[✔]</span> Opening challenge creation....
+        </p>
+      );
+      const newTab = window.open("/creator/create-challenge", "_blank");
+      newTab.focus();
+    } else if (input === "manage challenge") {
       newOutput = (
         <p>
           <span className="user">[✔]</span> View and manage challenges and
@@ -32,15 +40,15 @@ const CreatorTerminal = () => {
       // router.push("/creator/manage-challenge");
       const newTab = window.open("/creator/manage-challenge", "_blank");
       newTab.focus();
-    } else if (input === "create") {
+    } else if (input === "create image") {
       newOutput = (
         <p>
-          <span className="user">[✔]</span> Opening challenge creation....
+          <span className="user">[✔]</span> Opening image creation....
         </p>
       );
-      const newTab = window.open("/creator/create-challenge", "_blank");
+      const newTab = window.open("/creator/create-image", "_blank");
       newTab.focus();
-    } else if (input === "cd"){
+    } else if (input === "cd") {
       newOutput = (
         <p>
           <span className="user">[✔]</span> Starting participant mode....
@@ -117,8 +125,9 @@ const CreatorTerminal = () => {
       <p>cob is a ... </p>
       <p>
         {" "}
-        would you like to '<span className="commands">create</span>' or '
-        <span className="commands">manage</span>'?
+        would you like to '<span className="commands">create image</span>' or '
+        <span className="commands">create challenge</span>' or '
+        <span className="commands">manage challenge</span>'?
       </p>
       {/* <Help /> */}
       {renderHistory()}
