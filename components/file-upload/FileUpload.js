@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import React, { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { CursorArrowRaysIcon } from "@heroicons/react/24/solid";
@@ -9,29 +9,30 @@ const FileUpload = () => {
 
   const onDrop = async (acceptedFiles) => {
     const formData = new FormData();
-    formData.append("file", acceptedFiles[0]);
+    formData.append("image_file", acceptedFiles[0]);
 
     try {
       const response = await axios.post(
         "http://localhost:80/api/v1/trigger/image/upload",
         formData,
         {
-          auth: {
-            username: "test",
-            password: "test",
-          },
           headers: {
             "Content-Type": "multipart/form-data",
+            "Authorization": "Basic " + btoa("test:test"), // Basic Auth
           },
         }
       );
 
       console.log("File upload response:", response.data);
+      console.log(response.status);
 
       // Add the uploaded file name to the state
       setUploadedFileNames([...uploadedFileNames, acceptedFiles[0].name]);
     } catch (error) {
       console.error("File upload error:", error);
+      if (error.response) {
+        console.log(error.response.status); // Access the status code from the error response
+      }
     }
   };
 
@@ -47,7 +48,7 @@ const FileUpload = () => {
         <p>Drop the files here...</p>
       ) : (
         <p>
-          Click to select your files and create image{" "}
+          Click to select your files and create an image{" "}
           <span>
             {" "}
             <CursorArrowRaysIcon className="h-4 w-4" />{" "}
@@ -57,7 +58,7 @@ const FileUpload = () => {
 
       {uploadedFileNames.length > 0 && (
         <div>
-          <p>Uploaded files: </p>
+          <p>Uploaded file: </p>
           <ul>
             {uploadedFileNames.map((fileName, index) => (
               <li key={index}>{fileName}</li>
