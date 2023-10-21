@@ -31,7 +31,7 @@ const FileUpload = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:80/api/v1/trigger/image/upload",
+        "http://localhost:80/api/v1/trigger/image",
         formData,
         {
           headers: {
