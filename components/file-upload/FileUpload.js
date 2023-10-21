@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { CursorArrowRaysIcon } from "@heroicons/react/24/solid";
@@ -6,10 +6,28 @@ import axios from "axios";
 
 const FileUpload = () => {
   const [uploadedFileNames, setUploadedFileNames] = useState([]); // State to store uploaded file names
+  // const [imageName, setImageName] = useState(""); // State for imageName
+  // const [creatorName, setCreatorName] = useState(""); // State for creatorName
 
   const onDrop = async (acceptedFiles) => {
+    const inputImageName = prompt("Enter image name (e.g., the-image:latest):");
+    const inputCreatorName = prompt("Enter creator name (e.g., John):");
+
+    if (!inputImageName || !inputCreatorName) {
+      alert("Both image name and creator name are required.");
+      return;
+    }
+
     const formData = new FormData();
-    formData.append("image_file", acceptedFiles[0]);
+    formData.append("imageFile", acceptedFiles[0]);
+    formData.append("imageName", inputImageName); // Use the state value
+    formData.append("creatorName", inputCreatorName); // Use the state value
+
+    // Log the content of the formData
+    console.log("Form Data Contents:");
+    for (const pair of formData.entries()) {
+      console.log(pair[0], pair[1]);
+    }
 
     try {
       const response = await axios.post(
@@ -18,7 +36,7 @@ const FileUpload = () => {
         {
           headers: {
             "Content-Type": "multipart/form-data",
-            "Authorization": "Basic " + btoa("test:test"), // Basic Auth
+            Authorization: "Basic " + btoa("test:test"), // Basic Auth
           },
         }
       );
@@ -48,7 +66,7 @@ const FileUpload = () => {
         <p>Drop the files here...</p>
       ) : (
         <p>
-          Click to select your files and create an image{" "}
+          Click to upload your file(s) and create an image{" "}
           <span>
             {" "}
             <CursorArrowRaysIcon className="h-4 w-4" />{" "}
@@ -58,8 +76,8 @@ const FileUpload = () => {
 
       {uploadedFileNames.length > 0 && (
         <div>
-          <p>Uploaded file: </p>
-          <ul>
+          <p>Image created: </p>
+          <ul className="text-white">
             {uploadedFileNames.map((fileName, index) => (
               <li key={index}>{fileName}</li>
             ))}

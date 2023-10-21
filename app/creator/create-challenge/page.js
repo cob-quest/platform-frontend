@@ -1,32 +1,3 @@
-// import React from "react";
-
-// export default function CreateChallenge() {
-//   return (
-//     <main>
-//       <div>
-//         <h2 className="underline">
-//           <i>Retrieve image by typing the name of the image </i>
-//         </h2>
-//       </div>
-//       <div>
-//         <h2 className="underline">
-//           <i>Enter time allocated for challenge</i>
-//         </h2>
-//         <p> Time format HH:MM </p>
-//       </div>
-//       <div>
-//         <h2 className="underline">
-//           <i>Enter the Email IDs of the Challenge Participants</i>
-//         </h2>
-//       </div>
-//     </main>
-//   );
-// }
-
-// // drag drop (zip file)
-// // mailing list (but idk the format yet)
-// // set time (but idk the format yet)
-
 "use client";
 import React, { useState } from "react";
 import Help from "../../../components/creator/CreatorHelp";
@@ -52,29 +23,9 @@ const CreatorTerminal = () => {
     if (input === "help") {
       newOutput = <Help />;
     } else if (input === "retrieve image") {
-      // name of image
-      let isDone = false;
-      newOutput = (
-        <p>
-          <span className="user">[✔]</span> Enter the image you would like to
-          retrieve using the correlation ID.... when you are done, type "
-          <span className="commands">done</span>".
-        </p>
-      );
-      // Continuously prompt for input until the user enters "done"
-      while (!isDone) {
-        // Use the "await" keyword to asynchronously wait for input
-        const inputResult = await getUserInput();
-
-        if (inputResult === "done") {
-          isDone = true;
-        } else {
-          // Handle the input, e.g., store it or perform actions
-          // You can add logic to process each entered value here
-        }
-      }
-      // TODO: add image retrieval logic
-        // image does not exist
+      // list out all images through GET request
+    } else if (input === "choose image") {
+      // put index number
     } else if (input === "timer") {
       newOutput = (
         <p>
@@ -114,8 +65,7 @@ const CreatorTerminal = () => {
     setInput("");
   };
 
-   // Asynchronous function to get user input
-
+  // Asynchronous function to get user input
 
   // const renderOutput = () => {
   //     if (output === '') {
@@ -169,9 +119,9 @@ const CreatorTerminal = () => {
       <p>
         {" "}
         3 steps to create a challenge: '
-        <span className="commands">retrieve image</span>' -&gt;{" "}
-        '<span className="commands">timer</span>' -&gt;{" "}
-        '<span className="commands">participants</span>'
+        <span className="commands">retrieve image</span>' -&gt; '
+        <span className="commands">timer</span>' -&gt; '
+        <span className="commands">participants</span>'
       </p>
 
       {/* <Help /> */}
