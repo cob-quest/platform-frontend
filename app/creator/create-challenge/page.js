@@ -2,11 +2,18 @@
 import React, { useState } from "react";
 import Help from "../../../components/creator/CreatorHelp";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 const CreatorTerminal = () => {
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
   const [history, setHistory] = useState([]);
+  const [requestBody, setRequestBody] = useState({
+    imageName: "someimage",
+    creatorName: "someCreator",
+    duration: 0,
+    participants: [],
+  });
 
   const router = useRouter();
 
@@ -20,34 +27,122 @@ const CreatorTerminal = () => {
 
     // Process input command
     let newOutput = "";
+    // let requestBody = {
+    //   imageName: "someimage", // Set your image name
+    //   creatorName: "someCreator", // Set your creator name
+    //   duration: 0, // Set your duration
+    //   participants: [], // Set your participants
+    // };
+
     if (input === "help") {
       newOutput = <Help />;
     } else if (input === "retrieve image") {
       // list out all images through GET request
     } else if (input === "choose image") {
       // put index number
-    } else if (input === "timer") {
+    } else if (input.startsWith("timer")) {
+      const duration = parseInt(input.replace("timer", "").trim(), 10);
+      if (!isNaN(duration)) {
+        newOutput = (
+          <p>
+            <span className="user">[✔]</span> Duration set to {duration}{" "}
+            minutes.
+          </p>
+        );
+        setRequestBody((prevRequestBody) => ({ ...prevRequestBody, duration })); // Update state
+        console.log("Request body:", requestBody);
+        // TODO: add input timer logic
+      } else {
+        newOutput = (
+          <p>
+            <span className="user">[✖]</span> Invalid duration format. Please
+            use "timer [minutes]" format.
+          </p>
+        );
+      }
+    } else if (input.startsWith("participants")) {
+      const participantsInput = input.replace("participants", "").trim();
+      const participantsArray = participantsInput
+        .split(",")
+        .map((participant) => participant.trim());
       newOutput = (
         <p>
-          <span className="user">[✔]</span> Enter the time that you would like
-          to allot for this challenge....
+          <span className="user">[✔]</span> Participants set:{" "}
+          {participantsArray.join(", ")}.
         </p>
       );
-      // TODO: add input timer logic
-    } else if (input === "participants") {
+      setRequestBody((prevRequestBody) => ({
+        ...prevRequestBody,
+        participants: participantsArray,
+      })); // Update state
+      console.log("Request body:", requestBody);
+    }
+
+    // } else if (input.startsWith("timer")) {
+    //   const duration = parseInt(input.replace("timer", "").trim(), 10);
+    //   if (!isNaN(duration)) {
+    //     newOutput = (
+    //       <p>
+    //         <span className="user">[✔]</span> Duration set to {duration}{" "}
+    //         minutes.
+    //       </p>
+    //     );
+    //     requestBody.duration = duration;
+    //     console.log("Duration:", duration);
+    //   } else {
+    //     newOutput = (
+    //       <p>
+    //         <span className="user">[✖]</span> Invalid duration format. Please
+    //         use "timer [minutes]" format.
+    //       </p>
+    //     );
+    //   }
+    // } else if (input.startsWith("participants")) {
+    //   const participantsInput = input.replace("participants", "").trim();
+    //   const participantsArray = participantsInput
+    //     .split(",")
+    //     .map((participant) => participant.trim());
+    //   newOutput = (
+    //     <p>
+    //       <span className="user">[✔]</span> Participants set:{" "}
+    //       {participantsArray.join(", ")}.
+    //     </p>
+    //   );
+    //   requestBody.participants = participantsArray;
+    //   console.log("Participants:", participantsArray);
+    else if (input === "create challenge") {
       newOutput = (
         <p>
-          <span className="user">[✔]</span> Enter the list of participants
-          (seperated by commas)....
+          <span className="user">[✔]</span> Challenge is getting created....
         </p>
       );
-    } else if (input === "cd") {
-      newOutput = (
-        <p>
-          <span className="user">[✔]</span> ....
-        </p>
-      );
-      router.push("/");
+      // Make a POST request to create a challenge
+      const endpoint = "http://localhost:80/api/v1/trigger/challenge";
+
+      console.log("Request body:", requestBody);
+      // Axios POST request with headers
+      axios
+        .post(endpoint, requestBody, {
+          headers: {
+            Authorization: "Basic " + btoa("test:test"), // Replace with your Basic Auth token
+            "Content-Type": "application/json",
+          },
+        })
+        .then((response) => {
+          console.log("Challenge created:", response.data);
+          newOutput = (
+            <p>
+              <span className="user">[✔]</span> Challenge has been succesfully
+              created!
+            </p>
+          );
+          setOutput(newOutput);
+        })
+        .catch((error) => {
+          console.error("Error creating challenge: " + error);
+          newOutput = <p>Error creating challenge.</p>;
+          setOutput(newOutput);
+        });
     } else if (input === "clear") {
       setHistory([]);
       setInput("");
@@ -64,20 +159,6 @@ const CreatorTerminal = () => {
     setHistory((prevHistory) => [...prevHistory, { input, output: newOutput }]);
     setInput("");
   };
-
-  // Asynchronous function to get user input
-
-  // const renderOutput = () => {
-  //     if (output === '') {
-  //         return null;
-  //     }
-
-  //     return (
-  //         <pre className="output">
-  //             <code>{output}</code>
-  //         </pre>
-  //     );
-  // };
 
   const renderHistory = () => {
     if (history.length === 0) {
@@ -119,7 +200,7 @@ const CreatorTerminal = () => {
       <p>
         {" "}
         3 steps to create a challenge: '
-        <span className="commands">retrieve image</span>' -&gt; '
+        <span className="commands">retrieve </span>' -&gt; '
         <span className="commands">timer</span>' -&gt; '
         <span className="commands">participants</span>'
       </p>

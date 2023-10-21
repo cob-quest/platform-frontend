@@ -77,11 +77,11 @@ const FileUpload = () => {
       {uploadedFileNames.length > 0 && (
         <div>
           <p>Image created: </p>
-          <ul className="text-white">
+          <p className="text-white">
             {uploadedFileNames.map((fileName, index) => (
-              <li key={index}>{fileName}</li>
+              <p key={index}>{fileName}</p>
             ))}
-          </ul>
+          </p>
         </div>
       )}
     </div>
