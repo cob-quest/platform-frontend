@@ -14,11 +14,12 @@ const CreateImage = () => {
     if (input === "image status") {
       setLoading(true);
       // Replace 'YOUR_API_ENDPOINT' with your actual API endpoint for listing images
-      fetch("YOUR_API_ENDPOINT")
+      fetch("http://localhost:80/api/v1/platform/image")
         .then((response) => response.json())
         .then((data) => {
           setImageData(data);
           setLoading(false);
+          console.log("Image data:", data);
         })
         .catch((error) => {
           console.error("Error fetching image data: " + error);
@@ -72,26 +73,36 @@ const CreateImage = () => {
     setInput("");
   };
 
-  const ImageTable = ({ data }) => (
-    <table className="text-white">
-      <thead>
-        <tr>
-          <th className="table-cell-header">Image Name</th>
-          <th className="table-cell-header">Creator Name</th>
-          <th className="table-cell-header">Image Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        {data.map((image, index) => (
-          <tr key={index}>
-            <td className="table-cell">{image.image_name}</td>
-            <td className="table-cell">{image.creator_name}</td>
-            <td className="table-cell">{image.image_status}</td>
+  const ImageTable = ({ data }) => {
+    if (!data) {
+      return (
+        <p>
+          <span className="user">[X]</span> No images to list...
+        </p>
+      );
+    }
+
+    return (
+      <table className="text-white">
+        <thead>
+          <tr>
+            <th className="table-cell-header">Image Name</th>
+            <th className="table-cell-header">Creator Name</th>
+            <th className="table-cell-header">Image Status</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
-  );
+        </thead>
+        <tbody>
+          {data.map((image, index) => (
+            <tr key={index}>
+              <td className="table-cell">{image.image_name}</td>
+              <td className="table-cell">{image.creator_name}</td>
+              <td className="table-cell">{image.image_status}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    );
+  };
 
   // Asynchronous function to get user input
 
