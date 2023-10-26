@@ -27,13 +27,6 @@ const CreatorTerminal = () => {
 
     // Process input command
     let newOutput = "";
-    // let requestBody = {
-    //   imageName: "someimage", // Set your image name
-    //   creatorName: "someCreator", // Set your creator name
-    //   duration: 0, // Set your duration
-    //   participants: [], // Set your participants
-    // };
-
     if (input === "help") {
       newOutput = <Help />;
     } else if (input === "retrieve image") {
@@ -131,7 +124,7 @@ const CreatorTerminal = () => {
         .then((response) => {
           console.log("Challenge created:", response.data);
           newOutput = (
-            <p>
+            <p className="input-text-custom commands">
               <span className="user">[✔]</span> Challenge has been succesfully
               created!
             </p>
@@ -199,10 +192,11 @@ const CreatorTerminal = () => {
       </span>
       <p>
         {" "}
-        3 steps to create a challenge: '
-        <span className="commands">retrieve </span>' -&gt; '
+        4 steps to create a challenge: '<span className="commands">image</span>'
+        -&gt; '<span className="commands">creator</span>' -&gt; '
         <span className="commands">timer</span>' -&gt; '
-        <span className="commands">participants</span>'
+        <span className="commands">participants</span>' -&gt; '
+        <span className="commands">create challenge</span>'
       </p>
 
       {/* <Help /> */}
