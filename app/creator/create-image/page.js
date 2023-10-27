@@ -98,7 +98,7 @@ const CreateImage = () => {
           )}
         </div>
       );
-    } else if (input === "upload image") {
+    } else if (input === "upload-image") {
       newOutput = (
         <div
           className={`dropzone ${isDragActive ? "active" : ""}`}
@@ -268,7 +268,7 @@ const CreateImage = () => {
         {" "}
         state your '<span className="commands">image-name</span>' and '
         <span className="commands">creator-name</span>' and and select file to '
-        <span className="commands">upload image</span>' then check the status of
+        <span className="commands">upload-image</span>' then check the status of
         your image using '<span className="commands">image status</span>'
       </p>
 

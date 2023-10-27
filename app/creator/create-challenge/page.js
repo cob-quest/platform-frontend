@@ -29,10 +29,45 @@ const CreatorTerminal = () => {
     let newOutput = "";
     if (input === "help") {
       newOutput = <Help />;
-    } else if (input === "retrieve image") {
+    } else if (input.startsWith("retrieve-image")) {
       // list out all images through GET request
-    } else if (input === "choose image") {
-      // put index number
+      try {
+        const response = await axios.get("http://localhost:80/api/v1/platform/image", {
+          headers: {
+            Authorization: "Basic " + btoa("test:test"), // Replace with your authorization token
+          },
+        });
+    
+        const responseData = response.data;
+        const responseStatus = response.status;
+        // Handle the response data here, for example, you can set it in the state and display it.
+        console.log("Response Data:", responseData);
+        console.log("Response Status:", responseStatus);
+        // Update state or perform further actions as needed with the responseData.
+      } catch (error) {
+        console.error("Error fetching images:", error);
+        // Handle errors as needed
+      }
+    } else if (input.startsWith("choose-image")) {
+      // imageName
+      const imageName = input.replace("choose-image", "").trim();
+      newOutput = (
+        <p>
+          <span className="user">[✔]</span> Image name set to {imageName}.
+        </p>
+      );
+      setRequestBody((prevRequestBody) => ({ ...prevRequestBody, imageName })); // Update state
+      console.log("Request body:", requestBody);
+
+    } else if (input.startsWith("creator-name")) {
+      const creatorName = input.replace("creator-name", "").trim();
+      newOutput = (
+        <p>
+          <span className="user">[✔]</span> Creator name set to {creatorName}.
+        </p>
+      );
+      setRequestBody((prevRequestBody) => ({ ...prevRequestBody, creatorName })); // Update state
+      console.log("Request body:", requestBody);
     } else if (input.startsWith("timer")) {
       const duration = parseInt(input.replace("timer", "").trim(), 10);
       if (!isNaN(duration)) {
@@ -103,7 +138,7 @@ const CreatorTerminal = () => {
     //   );
     //   requestBody.participants = participantsArray;
     //   console.log("Participants:", participantsArray);
-    else if (input === "create challenge") {
+    else if (input === "create-challenge") {
       newOutput = (
         <p>
           <span className="user">[✔]</span> Challenge is getting created....
@@ -192,11 +227,12 @@ const CreatorTerminal = () => {
       </span>
       <p>
         {" "}
-        4 steps to create a challenge: '<span className="commands">image</span>'
-        -&gt; '<span className="commands">creator</span>' -&gt; '
+        4 steps to create a challenge: '<span className="commands">retrieve-image</span>'
+        -&gt; '<span className="commands">choose-image</span>' -&gt; '
+        <span className="commands">creator-name</span>' -&gt; '
         <span className="commands">timer</span>' -&gt; '
         <span className="commands">participants</span>' -&gt; '
-        <span className="commands">create challenge</span>'
+        <span className="commands">create-challenge</span>'
       </p>
 
       {/* <Help /> */}
