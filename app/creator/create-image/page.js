@@ -1,6 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import FileUpload from "@/components/file-upload/FileUpload";
+import { useDropzone } from "react-dropzone";
+import { CursorArrowRaysIcon } from "@heroicons/react/24/solid";
+import axios from "axios";
 
 const CreateImage = () => {
   const [input, setInput] = useState("");
@@ -8,6 +10,9 @@ const CreateImage = () => {
   const [history, setHistory] = useState([]);
   const [imageData, setImageData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [uploadedFileNames, setUploadedFileNames] = useState([]); // State to store uploaded file names
+  const [imageName, setImageName] = useState(""); // State for imageName
+  const [creatorName, setCreatorName] = useState(""); // State for creatorName
 
   // Fetch image data from your API when the component mounts
   useEffect(() => {
@@ -28,6 +33,45 @@ const CreateImage = () => {
     }
   }, [input]);
 
+  const onDrop = async (acceptedFiles) => {
+    const formData = new FormData();
+    formData.append("imageFile", acceptedFiles[0]);
+    formData.append("imageName", imageName); // Use the state value
+    formData.append("creatorName", creatorName); // Use the state value
+
+    // Log the content of the formData
+    console.log("Form Data Contents:");
+    for (const pair of formData.entries()) {
+      console.log(pair[0], pair[1]);
+    }
+
+    try {
+      const response = await axios.post(
+        "http://localhost:80/api/v1/trigger/image",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: "Basic " + btoa("test:test"), // Basic Auth
+          },
+        }
+      );
+
+      console.log("File upload response:", response.data);
+      console.log(response.status);
+
+      // Add the uploaded file name to the state
+      setUploadedFileNames([...uploadedFileNames, acceptedFiles[0].name]);
+    } catch (error) {
+      console.error("File upload error:", error);
+      if (error.response) {
+        console.log(error.response.status); // Access the status code from the error response
+      }
+    }
+  };
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+
   const handleInputChange = (e) => {
     setInput(e.target.value);
   };
@@ -40,8 +84,6 @@ const CreateImage = () => {
     let newOutput = "";
     if (input === "help") {
       newOutput = <Help />;
-    } else if (input === "upload image") {
-      newOutput = <FileUpload />;
     } else if (input === "image status") {
       // list out all images through GET request from YL
       newOutput = (
@@ -56,6 +98,73 @@ const CreateImage = () => {
           )}
         </div>
       );
+    } else if (input === "upload image") {
+      newOutput = (
+        <div
+          className={`dropzone ${isDragActive ? "active" : ""}`}
+          {...getRootProps()}
+        >
+          <input {...getInputProps()} />
+          {isDragActive ? (
+            <p>Drop the files here...</p>
+          ) : (
+            <p>
+              Click to upload your file(s) and create an image{" "}
+              <span>
+                {" "}
+                <CursorArrowRaysIcon className="h-4 w-4" />{" "}
+              </span>{" "}
+            </p>
+          )}
+
+          {uploadedFileNames.length > 0 && (
+            <div>
+              <p>Image created: </p>
+              <p className="text-white">
+                {uploadedFileNames.map((fileName, index) => (
+                  <p key={index}>{fileName}</p>
+                ))}
+              </p>
+            </div>
+          )}
+        </div>
+      );
+    } else if (input.startsWith("image-name")) {
+      // Handle 'image-name' input
+      const name = input.replace("image-name", "").trim();
+      if (name) {
+        setImageName(name); // Set the state
+        newOutput = (
+          <p>
+            <span className="user">[✔]</span> Image name has been set to: {name}
+          </p>
+        );
+        // Now you can use the 'imageName' variable in your request body.
+      } else {
+        newOutput = (
+          <p>
+            <span className="user">[X]</span> Image name not provided.
+          </p>
+        );
+      }
+    } else if (input.startsWith("creator-name")) {
+      // Handle 'creator-name' input
+      const name = input.replace("creator-name", "").trim();
+      if (name) {
+        setCreatorName(name); // Set the state
+        newOutput = (
+          <p>
+            <span className="user">[✔]</span> Creator name set to: {name}
+          </p>
+        );
+        // Now you can use the 'creatorName' variable in your request body.
+      } else {
+        newOutput = (
+          <p>
+            <span className="user">[!]</span> Creator name not provided.
+          </p>
+        );
+      }
     } else if (input === "clear") {
       setHistory([]);
       setInput("");
@@ -157,9 +266,10 @@ const CreateImage = () => {
       </span>
       <p>
         {" "}
-        to upload your image '<span className="commands">upload image</span>'
-        then check the status of your image using '
-        <span className="commands">image status</span>'
+        state your '<span className="commands">image-name</span>' and '
+        <span className="commands">creator-name</span>' and and select file to '
+        <span className="commands">upload image</span>' then check the status of
+        your image using '<span className="commands">image status</span>'
       </p>
 
       {/* <Help /> */}
