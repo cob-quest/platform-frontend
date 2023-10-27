@@ -5,6 +5,9 @@ import { CursorArrowRaysIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 
 const FileUpload = () => {
+  const [input, setInput] = useState("");
+  const [output, setOutput] = useState("");
+  const [history, setHistory] = useState([]);
   const [uploadedFileNames, setUploadedFileNames] = useState([]); // State to store uploaded file names
   const [imageName, setImageName] = useState(""); // State for imageName
   const [creatorName, setCreatorName] = useState(""); // State for creatorName
