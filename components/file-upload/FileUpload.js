@@ -3,14 +3,12 @@ import React, { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { CursorArrowRaysIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
-import { useRouter } from "next/router";
 
 const FileUpload = () => {
   const [uploadedFileNames, setUploadedFileNames] = useState([]); // State to store uploaded file names
   const [imageName, setImageName] = useState(""); // State for imageName
   const [creatorName, setCreatorName] = useState(""); // State for creatorName
 
-  const router = useRouter();
 
   const onDrop = async (acceptedFiles) => {
     const formData = new FormData();
@@ -142,7 +140,7 @@ const FileUpload = () => {
           <span className="user">[✔]</span> Starting participant mode....
         </p>
       );
-      router.push("/");
+    
     } else if (input === "clear") {
       setHistory([]);
       setInput("");
