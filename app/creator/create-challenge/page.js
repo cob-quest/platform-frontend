@@ -32,12 +32,26 @@ const CreatorTerminal = () => {
     } else if (input.startsWith("retrieve-image")) {
       // list out all images through GET request
       try {
-        const response = await axios.get("http://localhost:80/api/v1/platform/image", {
-          headers: {
-            Authorization: "Basic " + btoa("test:test"), // Replace with your authorization token
-          },
-        });
-    
+        const response = await axios.get(
+          "http://localhost:80/api/v1/platform/image",
+          {
+            headers: {
+              Authorization: "Basic " + btoa("test:test"), // Replace with your authorization token
+            },
+          }
+        );
+        // Iterate through the responseData to display image names
+        const imageNames = responseData.map((image) => image.imageName);
+
+        const imagesOutput = (
+            <p>
+              {imageNames.map((name, index) => (
+                <p key={index}>{name}</p>
+              ))}
+            </p>
+        );
+         newOutput = imagesOutput;
+
         const responseData = response.data;
         const responseStatus = response.status;
         // Handle the response data here, for example, you can set it in the state and display it.
@@ -58,7 +72,6 @@ const CreatorTerminal = () => {
       );
       setRequestBody((prevRequestBody) => ({ ...prevRequestBody, imageName })); // Update state
       console.log("Request body:", requestBody);
-
     } else if (input.startsWith("creator-name")) {
       const creatorName = input.replace("creator-name", "").trim();
       newOutput = (
@@ -66,7 +79,10 @@ const CreatorTerminal = () => {
           <span className="user">[✔]</span> Creator name set to {creatorName}.
         </p>
       );
-      setRequestBody((prevRequestBody) => ({ ...prevRequestBody, creatorName })); // Update state
+      setRequestBody((prevRequestBody) => ({
+        ...prevRequestBody,
+        creatorName,
+      })); // Update state
       console.log("Request body:", requestBody);
     } else if (input.startsWith("timer")) {
       const duration = parseInt(input.replace("timer", "").trim(), 10);
@@ -104,41 +120,7 @@ const CreatorTerminal = () => {
         participants: participantsArray,
       })); // Update state
       console.log("Request body:", requestBody);
-    }
-
-    // } else if (input.startsWith("timer")) {
-    //   const duration = parseInt(input.replace("timer", "").trim(), 10);
-    //   if (!isNaN(duration)) {
-    //     newOutput = (
-    //       <p>
-    //         <span className="user">[✔]</span> Duration set to {duration}{" "}
-    //         minutes.
-    //       </p>
-    //     );
-    //     requestBody.duration = duration;
-    //     console.log("Duration:", duration);
-    //   } else {
-    //     newOutput = (
-    //       <p>
-    //         <span className="user">[✖]</span> Invalid duration format. Please
-    //         use "timer [minutes]" format.
-    //       </p>
-    //     );
-    //   }
-    // } else if (input.startsWith("participants")) {
-    //   const participantsInput = input.replace("participants", "").trim();
-    //   const participantsArray = participantsInput
-    //     .split(",")
-    //     .map((participant) => participant.trim());
-    //   newOutput = (
-    //     <p>
-    //       <span className="user">[✔]</span> Participants set:{" "}
-    //       {participantsArray.join(", ")}.
-    //     </p>
-    //   );
-    //   requestBody.participants = participantsArray;
-    //   console.log("Participants:", participantsArray);
-    else if (input === "create-challenge") {
+    } else if (input === "create-challenge") {
       newOutput = (
         <p>
           <span className="user">[✔]</span> Challenge is getting created....
@@ -227,8 +209,9 @@ const CreatorTerminal = () => {
       </span>
       <p>
         {" "}
-        4 steps to create a challenge: '<span className="commands">retrieve-image</span>'
-        -&gt; '<span className="commands">choose-image</span>' -&gt; '
+        4 steps to create a challenge: '
+        <span className="commands">retrieve-image</span>' -&gt; '
+        <span className="commands">choose-image</span>' -&gt; '
         <span className="commands">creator-name</span>' -&gt; '
         <span className="commands">timer</span>' -&gt; '
         <span className="commands">participants</span>' -&gt; '
