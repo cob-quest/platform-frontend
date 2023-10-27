@@ -48,6 +48,14 @@ const CreatorTerminal = () => {
       );
       const newTab = window.open("/creator/create-image", "_blank");
       newTab.focus();
+    } else if (input === "my challenges") {
+      newOutput = (
+        <p>
+          <span className="user">[✔]</span> Opening your challenges....
+        </p>
+      );
+      const newTab = window.open("/creator/my-challenges", "_blank");
+      newTab.focus();
     } else if (input === "cd") {
       newOutput = (
         <p>
