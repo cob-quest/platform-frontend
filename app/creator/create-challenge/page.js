@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import Help from "../../../components/creator/CreatorHelp";
-import { useRouter } from "next/navigation";
 import axios from "axios";
 
 const CreatorTerminal = () => {
@@ -14,8 +13,7 @@ const CreatorTerminal = () => {
     duration: 0,
     participants: [],
   });
-
-  const router = useRouter();
+  const [imageNames, setImageNames] = useState([]); // State to store image names
 
   const handleInputChange = (e) => {
     setInput(e.target.value);
@@ -29,8 +27,7 @@ const CreatorTerminal = () => {
     let newOutput = "";
     if (input === "help") {
       newOutput = <Help />;
-    } else if (input.startsWith("retrieve-image")) {
-      // list out all images through GET request
+    } else if (input === "ls image") {
       try {
         const response = await axios.get(
           "http://localhost:80/api/v1/platform/image",
@@ -41,22 +38,25 @@ const CreatorTerminal = () => {
           }
         );
         // Iterate through the responseData to display image names
-        const imageNames = responseData.map((image) => image.imageName);
-
-        const imagesOutput = (
-            <p>
-              {imageNames.map((name, index) => (
-                <p key={index}>{name}</p>
-              ))}
-            </p>
-        );
-         newOutput = imagesOutput;
-
+        // Extract image names and set them in the state
         const responseData = response.data;
         const responseStatus = response.status;
-        // Handle the response data here, for example, you can set it in the state and display it.
         console.log("Response Data:", responseData);
         console.log("Response Status:", responseStatus);
+
+        const imageNames = responseData.map((image) => image.imageName);
+        setImageNames(imageNames);
+        if (imageNames.length === 0) {
+          return null;
+        }
+        return (
+          <div>
+            <p>Available images:</p>
+            {imageNames.map((name, index) => (
+              <p key={index}>{name}</p>
+            ))}
+          </div>
+        );
         // Update state or perform further actions as needed with the responseData.
       } catch (error) {
         console.error("Error fetching images:", error);
