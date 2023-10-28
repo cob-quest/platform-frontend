@@ -80,18 +80,6 @@ const CreatorTerminal = () => {
     setInput("");
   };
 
-  // const renderOutput = () => {
-  //     if (output === '') {
-  //         return null;
-  //     }
-
-  //     return (
-  //         <pre className="output">
-  //             <code>{output}</code>
-  //         </pre>
-  //     );
-  // };
-
   const renderHistory = () => {
     if (history.length === 0) {
       return null;
@@ -130,12 +118,12 @@ const CreatorTerminal = () => {
         <span className="commands"> welcome@creator</span>
       </span>
       <p> welcome to cob </p>
-      <p>cob is a ... </p>
       <p>
         {" "}
         would you like to '<span className="commands">create image</span>' or '
         <span className="commands">create challenge</span>' or '
-        <span className="commands">manage challenge</span>'?
+        <span className="commands">manage challenge</span>' or '
+        <span className="commands">my challenge</span>'?
       </p>
       {/* <Help /> */}
       {renderHistory()}
