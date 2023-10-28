@@ -206,7 +206,7 @@ const CreatorTerminal = () => {
       </span>
       <p>
         {" "}
-        4 steps to create a challenge: '
+        steps to create a challenge: '
         <span className="commands">ls image</span>' -&gt; '
         <span className="commands">choose-image</span>' -&gt; '
         <span className="commands">creator-name</span>' -&gt; '

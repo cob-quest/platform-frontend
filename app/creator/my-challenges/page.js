@@ -1,12 +1,12 @@
 "use client"
-import ChallengeResults from "@/components/ChallengeResults"
+import ChallengesByCreator from "@/components/ChallengeResults"
 import { useRouter } from "next/navigation";
 
 export default function Home() {
   const router = useRouter();
   return (
     <section>
-      <ChallengeResults router={router}/>
+      <ChallengesByCreator router={router}/>
     </section>
   )
 }
