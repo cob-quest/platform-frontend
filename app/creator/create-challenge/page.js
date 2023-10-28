@@ -46,10 +46,8 @@ const CreatorTerminal = () => {
 
         const imageNames = responseData.map((image) => image.imageName);
         setImageNames(imageNames);
-        if (imageNames.length === 0) {
-          return null;
-        }
-        return (
+        console.log("Image names:", imageNames);
+        newOutput = (
           <div>
             <p>Available images:</p>
             {imageNames.map((name, index) => (
