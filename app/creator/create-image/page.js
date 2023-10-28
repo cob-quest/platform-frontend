@@ -57,6 +57,20 @@ const CreateImage = () => {
         }
       );
 
+      if (response.status === 200) {
+        newOutput = (
+          <p>
+            <span className="user">[✔]</span> Image builded successfully!
+          </p>
+        );
+      } else {
+        newOutput = (
+          <p>
+            <span className="user">[X]</span> Image upload failed. Please try again.
+          </p>
+        );
+      }
+
       console.log("File upload response:", response.data);
       console.log(response.status);
 
@@ -109,7 +123,7 @@ const CreateImage = () => {
             <p>Drop the files here...</p>
           ) : (
             <p>
-              Click to upload your file(s) and create an image{" "}
+              Click here to upload your file(s){" "}
               <span>
                 {" "}
                 <CursorArrowRaysIcon className="h-4 w-4" />{" "}
