@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import Help from "./CreatorHelp";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 const CreatorTerminal = () => {
   const [input, setInput] = useState("");
@@ -49,7 +50,7 @@ const CreatorTerminal = () => {
       );
       const newTab = window.open("/creator/create-image", "_blank");
       newTab.focus();
-    } else if (input === "my challenges") {
+    } else if (input === "ls challenges") {
       newOutput = (
         <p>
           <span className="user">[✔]</span> Listing your challenges....
@@ -154,7 +155,7 @@ const CreatorTerminal = () => {
         would you like to '<span className="commands">create image</span>' or '
         <span className="commands">create challenge</span>' or '
         <span className="commands">manage challenge</span>' or '
-        <span className="commands">my challenges</span>'?
+        <span className="commands">ls challenges</span>'?
       </p>
       {/* <Help /> */}
       {renderHistory()}

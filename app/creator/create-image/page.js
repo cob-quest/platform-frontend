@@ -16,7 +16,7 @@ const CreateImage = () => {
 
   // Fetch image data from your API when the component mounts
   useEffect(() => {
-    if (input === "image status") {
+    if (input === "status") {
       setLoading(true);
       // Replace 'YOUR_API_ENDPOINT' with your actual API endpoint for listing images
       fetch("http://localhost:80/api/v1/platform/image")
@@ -84,7 +84,7 @@ const CreateImage = () => {
     let newOutput = "";
     if (input === "help") {
       newOutput = <Help />;
-    } else if (input === "image status") {
+    } else if (input === "status") {
       // list out all images through GET request from YL
       newOutput = (
         <div>
@@ -98,7 +98,7 @@ const CreateImage = () => {
           )}
         </div>
       );
-    } else if (input === "upload-image") {
+    } else if (input === "upload") {
       newOutput = (
         <div
           className={`dropzone ${isDragActive ? "active" : ""}`}
@@ -268,8 +268,8 @@ const CreateImage = () => {
         {" "}
         state your '<span className="commands">image-name</span>' and '
         <span className="commands">creator-name</span>' and and select file to '
-        <span className="commands">upload-image</span>' then check the status of
-        your image using '<span className="commands">image status</span>'
+        <span className="commands">upload</span>' then check the status of
+        your image using '<span className="commands">status</span>'
       </p>
 
       {/* <Help /> */}
