@@ -49,7 +49,6 @@ const CreatorTerminal = () => {
         console.log("Image names:", imageNames);
         newOutput = (
           <div>
-            <p>Available images:</p>
             {imageNames.map((name, index) => (
               <p key={index}>{name}</p>
             ))}
@@ -208,7 +207,7 @@ const CreatorTerminal = () => {
       <p>
         {" "}
         4 steps to create a challenge: '
-        <span className="commands">retrieve-image</span>' -&gt; '
+        <span className="commands">ls image</span>' -&gt; '
         <span className="commands">choose-image</span>' -&gt; '
         <span className="commands">creator-name</span>' -&gt; '
         <span className="commands">timer</span>' -&gt; '
