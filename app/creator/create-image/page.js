@@ -32,7 +32,7 @@ const CreateImage = () => {
     let newOutput = "";
     try {
       const response = await axios.post(
-        "http://traefik.platform/api/v1/platform/image",
+        "http://34.41.93.186/api/v1/platform/image",
         formData,
         {
           headers: {
@@ -105,7 +105,7 @@ const CreateImage = () => {
       if (corId) {
         try {
           const response = await axios.get(
-            `http://traefik.platform/api/v1/platform/process/${corId}`
+            `http://34.41.93.186/api/v1/platform/process/${corId}`
           );
           // Process the response from the process endpoint
           console.log("Process response:", response.data);
