@@ -24,8 +24,6 @@ const Intro = () => {
       </span>
       <pre className="ascii-art">{asciiArt}</pre>
       <p> </p>
-      <p> welcome to cob </p>
-      <p>cob is a ... </p>
       <p>
         {" "}
         would you like to be a '<span className="commands">creator</span>' or '

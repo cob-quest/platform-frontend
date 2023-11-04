@@ -13,31 +13,15 @@ const CreateImage = () => {
   const [uploadedFileNames, setUploadedFileNames] = useState([]); // State to store uploaded file names
   const [imageName, setImageName] = useState(""); // State for imageName
   const [creatorName, setCreatorName] = useState(""); // State for creatorName
-
-  // Fetch image data from your API when the component mounts
-  useEffect(() => {
-    if (input === "status") {
-      setLoading(true);
-      // Replace 'YOUR_API_ENDPOINT' with your actual API endpoint for listing images
-      fetch("http://localhost:80/api/v1/platform/image")
-        .then((response) => response.json())
-        .then((data) => {
-          setImageData(data);
-          setLoading(false);
-          console.log("Image data:", data);
-        })
-        .catch((error) => {
-          console.error("Error fetching image data: " + error);
-          setLoading(false);
-        });
-    }
-  }, [input]);
+  const [imageTag, setImageTag] = useState(""); // State for imageTag
+  const [corId, setCorId] = useState(""); // State to store corID
 
   const onDrop = async (acceptedFiles) => {
     const formData = new FormData();
     formData.append("imageFile", acceptedFiles[0]);
     formData.append("imageName", imageName); // Use the state value
     formData.append("creatorName", creatorName); // Use the state value
+    formData.append("imageTag", imageTag); // Use the state value
 
     // Log the content of the formData
     console.log("Form Data Contents:");
@@ -45,9 +29,10 @@ const CreateImage = () => {
       console.log(pair[0], pair[1]);
     }
 
+    let newOutput = "";
     try {
       const response = await axios.post(
-        "http://localhost:80/api/v1/trigger/image",
+        "http://localhost:80/api/v1/platform/image",
         formData,
         {
           headers: {
@@ -58,15 +43,19 @@ const CreateImage = () => {
       );
 
       if (response.status === 200) {
+        setCorId(response.data.corId);
+        console.log("CorId:", response.data.corId);
         newOutput = (
           <p>
-            <span className="user">[✔]</span> Image builded successfully!
+            <span className="user">[✔]</span> Image has started building! Check
+            the status to see when it has finished building!
           </p>
         );
       } else {
         newOutput = (
           <p>
-            <span className="user">[X]</span> Image upload failed. Please try again.
+            <span className="user">[X]</span> Image upload failed. Please try
+            again.
           </p>
         );
       }
@@ -99,19 +88,56 @@ const CreateImage = () => {
     if (input === "help") {
       newOutput = <Help />;
     } else if (input === "status") {
-      // list out all images through GET request from YL
-      newOutput = (
-        <div>
+      // call endpoint to get image status
+      // newOutput = (
+      //   <div>
+      //     <p>
+      //       <span className="user">[✔]</span> Listing image status...
+      //     </p>
+      //     {loading ? (
+      //       <p>Loading image data...</p>
+      //     ) : (
+      //       <ImageTable data={imageData} />
+      //     )}
+      //   </div>
+      // );
+      // Make a request to the process endpoint using the stored corId
+      if (corId) {
+        try {
+          const response = await axios.get(
+            `http://localhost:80/api/v1/platform/process/${corId}`
+          );
+          // Process the response from the process endpoint
+          console.log("Process response:", response.data);
+          console.log("Process response status:", response.eventStatus);
+          console.log(
+            "Process response data status:",
+            response.data.eventStatus
+          );
+          newOutput = (
+            <p>
+              <span className="user">[✔]</span> Image status:{" "}
+              {response.data.eventStatus}
+            </p>
+          );
+          // You can update 'newOutput' based on the response from the process endpoint
+        } catch (error) {
+          // Handle errors from the process endpoint
+          console.error("Error fetching process data:", error);
+          newOutput = (
+            <p>
+              <span className="user">[X]</span> Error fetching image status.
+            </p>
+          );
+        }
+      } else {
+        newOutput = (
           <p>
-            <span className="user">[✔]</span> Listing image status...
+            <span className="user">[X]</span> CorId is not available. Please
+            upload an image first.
           </p>
-          {loading ? (
-            <p>Loading image data...</p>
-          ) : (
-            <ImageTable data={imageData} />
-          )}
-        </div>
-      );
+        );
+      }
     } else if (input === "upload") {
       newOutput = (
         <div
@@ -129,17 +155,6 @@ const CreateImage = () => {
                 <CursorArrowRaysIcon className="h-4 w-4" />{" "}
               </span>{" "}
             </p>
-          )}
-
-          {uploadedFileNames.length > 0 && (
-            <div>
-              <p>Image created: </p>
-              <p className="text-white">
-                {uploadedFileNames.map((fileName, index) => (
-                  <p key={index}>{fileName}</p>
-                ))}
-              </p>
-            </div>
           )}
         </div>
       );
@@ -179,6 +194,24 @@ const CreateImage = () => {
           </p>
         );
       }
+    } else if (input.startsWith("image-tag")) {
+      // Handle 'creator-name' input
+      const name = input.replace("image-tag", "").trim();
+      if (name) {
+        setImageTag(name); // Set the state
+        newOutput = (
+          <p>
+            <span className="user">[✔]</span> Image tag set to: {name}
+          </p>
+        );
+        // Now you can use the 'creatorName' variable in your request body.
+      } else {
+        newOutput = (
+          <p>
+            <span className="user">[!]</span> Image tag not provided.
+          </p>
+        );
+      }
     } else if (input === "clear") {
       setHistory([]);
       setInput("");
@@ -195,51 +228,6 @@ const CreateImage = () => {
     setHistory((prevHistory) => [...prevHistory, { input, output: newOutput }]);
     setInput("");
   };
-
-  const ImageTable = ({ data }) => {
-    if (!data) {
-      return (
-        <p>
-          <span className="user">[X]</span> No images to list...
-        </p>
-      );
-    }
-
-    return (
-      <table className="text-white">
-        <thead>
-          <tr>
-            <th className="table-cell-header">Image Name</th>
-            <th className="table-cell-header">Creator Name</th>
-            <th className="table-cell-header">Image Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((image, index) => (
-            <tr key={index}>
-              <td className="table-cell">{image.image_name}</td>
-              <td className="table-cell">{image.creator_name}</td>
-              <td className="table-cell">{image.image_status}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    );
-  };
-
-  // Asynchronous function to get user input
-
-  // const renderOutput = () => {
-  //     if (output === '') {
-  //         return null;
-  //     }
-
-  //     return (
-  //         <pre className="output">
-  //             <code>{output}</code>
-  //         </pre>
-  //     );
-  // };
 
   const renderHistory = () => {
     if (history.length === 0) {
@@ -281,9 +269,10 @@ const CreateImage = () => {
       <p>
         {" "}
         state your '<span className="commands">image-name</span>' and '
-        <span className="commands">creator-name</span>' and and select file to '
-        <span className="commands">upload</span>' then check the status of
-        your image using '<span className="commands">status</span>'
+        <span className="commands">image-tag</span>' '
+        <span className="commands">creator-name</span>' and select file to '
+        <span className="commands">upload</span>' then check the status of your
+        image using '<span className="commands">status</span>'
       </p>
 
       {/* <Help /> */}

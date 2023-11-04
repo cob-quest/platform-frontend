@@ -1,11 +1,17 @@
 "use client";
 import React, { useState } from "react";
-
+import axios from "axios";
 
 const ParticipantTerminal = () => {
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
   const [history, setHistory] = useState([]);
+  const [token, setToken] = useState(""); // State to store token
+  const [corId, setCorId] = useState(""); // State to store corId
+  const [sshKey, setSshKey] = useState(""); // State to store SSH Key
+  const [port, setPort] = useState(""); // State to store Port
+  const [ipAddress, setIpAddress] = useState(""); // State to store IP Address
+  const [eventStatus, setEventStatus] = useState(""); // State to store Event Status
 
   const handleInputChange = (e) => {
     setInput(e.target.value);
@@ -19,26 +25,129 @@ const ParticipantTerminal = () => {
     let newOutput = "";
     if (input === "help") {
       newOutput = <Help />;
-      // } else if (input === 'about') {
-      //     newOutput = <About />;
-      // } else if (input === 'skills') {
-      //     newOutput = <Skills />;
-      // } else if (input === 'socials') {
-      //     newOutput = <Socials />;
-      // } else if (input === 'projects') {
-      //     newOutput = <Projects />;
-    } else if (input === "start") {
-      newOutput = (
-        <p>
+    } else if (input.startsWith("token")) {
+      // Extract the token from the input
+      const token = input.replace("token", "").trim();
+      setToken(token); // Store the token
+
+      // Make a POST request to create a challenge with the stored token
+      const endpoint = "http://localhost:80/api/v1/platform/attempt";
+
+      const requestBody = {
+        token: token,
+      };
+
+      axios
+        .post(endpoint, requestBody, {
+          headers: {
+            Authorization: "Basic " + btoa("test:test"), // Replace with your Basic Auth token
+            "Content-Type": "application/json",
+          },
+        })
+        .then((response) => {
+          console.log("Challenge is being created:", response.data);
+          newOutput = (
+            <p>
+              <span className="user">[✔]</span> Token is valid! Challenge has
+              been retrieved
+            </p>
+          );
+          // Store the corId in the state
+          setCorId(response.data.corId);
+        })
+        .catch((error) => {
+          console.error("Error creating challenge: " + error);
+          newOutput = <p>Error creating challenge.</p>;
+        });
+    } else if (input.startsWith("status")) {
+      // Check if corId is not empty
+      if (corId) {
+        // Make a GET request to get the challenge status with the stored corId
+        const statusEndpoint = `http://localhost:80/api/v1/platform/challenge/status/${corId}`;
+        axios
+          .get(statusEndpoint, {
+            headers: {
+              Authorization: "Basic " + btoa("test:test"), // Replace with your Basic Auth token
+            },
+          })
+          .then((response) => {
+            const eventStatus = response.data.eventStatus;
+            setEventStatus(eventStatus); // Store the eventStatus
+            console.log("Challenge status is:", eventStatus);
+            newOutput = (
+              <p className="input-text-custom commands">
+                <span className="user">[✔]</span> Challenge status is{" "}
+                {eventStatus}
+              </p>
+            );
+            setOutput(newOutput);
+          })
+          .catch((error) => {
+            console.error("Error checking challenge status: " + error);
+            newOutput = <p>Error checking challenge status.</p>;
+            setOutput(newOutput);
+          });
+      } else {
+        newOutput = (
           <p>
-            <span className="user">[✔]</span> Starting challenge and timer....
+            <span className="user">[✖]</span> corId is empty. Create a challenge
+            first.
           </p>
-          <p> </p>
-          <p> ssh key: njekwe </p>
-          <p> secret key: dwjeol </p>
-          <p> timer: </p>
-        </p>
-      );
+        );
+      }
+    } else if (input.startsWith("start")) {
+      // if (eventStatus === "challengeStarted") {
+
+      // Make a GET request to get SSH Key, Port, and IP Address with the stored token
+      const startEndpoint = `http://localhost:80/api/v1/platform/attempt/${token}`;
+
+      axios
+        .get(startEndpoint, {
+          headers: {
+            Authorization: "Basic " + btoa("test:test"), // Replace with your Basic Auth token
+          },
+        })
+        .then((response) => {
+          const sshKeyResponse = response.data.sshkey;
+          const portResponse = response.data.port;
+          const ipAddressResponse = response.data.ipaddress;
+          setSshKey(sshKeyResponse);
+          setPort(portResponse);
+          setIpAddress(ipAddressResponse);
+          console.log("SSH Key:", sshKeyResponse);
+          console.log("Port:", portResponse);
+          console.log("IP Address:", ipAddressResponse);
+          newOutput = (
+            <div>
+              <p>
+                {" "}
+                Challenge is retrieved and here are your details! All the best!{" "}
+              </p>
+              <p className="input-text-custom commands">
+                <span className="user">[✔]</span> SSH Key: {sshKey}
+              </p>
+              <p className="input-text-custom commands">
+                <span className="user">[✔]</span> Port: {port}
+              </p>
+              <p className="input-text-custom commands">
+                <span className="user">[✔]</span> IP Address: {ipAddress}
+              </p>
+            </div>
+          );
+        })
+        .catch((error) => {
+          console.error(
+            "Error fetching SSH Key, Port, and IP Address: " + error
+          );
+          newOutput = <p>Error fetching SSH Key, Port, and IP Address.</p>;
+        });
+      // } else {
+      //   newOutput = (
+      //     <p>
+      //       <span className="user">[✖]</span> Challenge has not started yet.
+      //     </p>
+      //   );
+      // }
     } else if (input === "clear") {
       setHistory([]);
       setInput("");
@@ -55,18 +164,6 @@ const ParticipantTerminal = () => {
     setHistory((prevHistory) => [...prevHistory, { input, output: newOutput }]);
     setInput("");
   };
-
-  // const renderOutput = () => {
-  //     if (output === '') {
-  //         return null;
-  //     }
-
-  //     return (
-  //         <pre className="output">
-  //             <code>{output}</code>
-  //         </pre>
-  //     );
-  // };
 
   const renderHistory = () => {
     if (history.length === 0) {
@@ -124,14 +221,10 @@ const ParticipantTerminal = () => {
         </span>
         <pre className="ascii-art">{asciiArt}</pre>
         <p> </p>
-        <p> welcome to cob </p>
-        <p>cob is a ... </p>
-        <p> challenge title </p>
-        <p> challenge instructions </p>
-        <p> challenge time allotted </p>
+        
         <p>
           {" "}
-          type "<span className="commands">start</span>" to begin your
+          type '<span className="commands">start</span>'' to begin your
           challenge. you will be provided a ssh key and secret key upon starting
           the challenge.
         </p>

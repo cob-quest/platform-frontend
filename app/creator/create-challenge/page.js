@@ -9,10 +9,13 @@ const CreatorTerminal = () => {
   const [history, setHistory] = useState([]);
   const [requestBody, setRequestBody] = useState({
     imageName: "someimage",
+    imageTag: "sometag",
     creatorName: "someCreator",
+    challengeName: "someChallenge",
     duration: 0,
     participants: [],
   });
+  const [corId, setCorId] = useState(""); // State to store corID
   const [imageNames, setImageNames] = useState([]); // State to store image names
 
   const handleInputChange = (e) => {
@@ -64,7 +67,7 @@ const CreatorTerminal = () => {
       const imageName = input.replace("choose-image", "").trim();
       newOutput = (
         <p>
-          <span className="user">[✔]</span> Image name set to {imageName}.
+          <span className="user">[✔]</span> {imageName} has been chosen.
         </p>
       );
       setRequestBody((prevRequestBody) => ({ ...prevRequestBody, imageName })); // Update state
@@ -79,6 +82,31 @@ const CreatorTerminal = () => {
       setRequestBody((prevRequestBody) => ({
         ...prevRequestBody,
         creatorName,
+      })); // Update state
+      console.log("Request body:", requestBody);
+    } else if (input.startsWith("challenge-name")) {
+      const challengeName = input.replace("challenge-name", "").trim();
+      newOutput = (
+        <p>
+          <span className="user">[✔]</span> Challenge name set to{" "}
+          {challengeName}.
+        </p>
+      );
+      setRequestBody((prevRequestBody) => ({
+        ...prevRequestBody,
+        challengeName,
+      })); // Update state
+      console.log("Request body:", requestBody);
+    } else if (input.startsWith("image-tag")) {
+      const imageTag = input.replace("image-tag", "").trim();
+      newOutput = (
+        <p>
+          <span className="user">[✔]</span> Image tag set to {imageTag}.
+        </p>
+      );
+      setRequestBody((prevRequestBody) => ({
+        ...prevRequestBody,
+        imageTag,
       })); // Update state
       console.log("Request body:", requestBody);
     } else if (input.startsWith("timer")) {
@@ -108,7 +136,7 @@ const CreatorTerminal = () => {
         .map((participant) => participant.trim());
       newOutput = (
         <p>
-          <span className="user">[✔]</span> Participants set:{" "}
+          <span className="user">[✔]</span> Participants set to{" "}
           {participantsArray.join(", ")}.
         </p>
       );
@@ -124,7 +152,7 @@ const CreatorTerminal = () => {
         </p>
       );
       // Make a POST request to create a challenge
-      const endpoint = "http://localhost:80/api/v1/trigger/challenge";
+      const endpoint = "http://localhost:80/api/v1/platform/challenge";
 
       console.log("Request body:", requestBody);
       // Axios POST request with headers
@@ -136,13 +164,14 @@ const CreatorTerminal = () => {
           },
         })
         .then((response) => {
-          console.log("Challenge created:", response.data);
+          console.log("Challenge is being created:", response.data);
           newOutput = (
             <p className="input-text-custom commands">
-              <span className="user">[✔]</span> Challenge has been succesfully
-              created!
+              <span className="user">[✔]</span> Challenge is being created!
             </p>
           );
+          // Store the corId in the state
+          setCorId(response.data.corId);
           setOutput(newOutput);
         })
         .catch((error) => {
@@ -154,6 +183,59 @@ const CreatorTerminal = () => {
       setHistory([]);
       setInput("");
       return;
+    } else if (input.startsWith("status")) {
+      // Check if corId is not empty
+      if (corId) {
+        // Make a GET request to process the challenge with the stored corId
+        try {
+          const response = await axios.get(
+            `http://localhost:80/api/v1/platform/process/${corId}`
+          );
+          // .then((response) => {
+          //   const eventStatus = response.data.eventStatus;
+          //   console.log("Challenge status:", eventStatus);
+          //   newOutput = (
+          //     <p className="input-text-custom commands">
+          //       <span className="user">[✔]</span> Challenge status:{" "}
+          //       {eventStatus}
+          //     </p>
+          //   );
+          //   setOutput(newOutput);
+          // })
+          // .catch((error) => {
+          //   console.error("Error processing challenge: " + error);
+          //   newOutput = <p>Error processing challenge.</p>;
+          //   setOutput(newOutput);
+          // });
+          console.log("Process response:", response.data);
+          console.log("Process response status:", response.eventStatus);
+          console.log(
+            "Process response data status:",
+            response.data.eventStatus
+          );
+          newOutput = (
+            <p>
+              <span className="user">[✔]</span> Image status:{" "}
+              {response.data.eventStatus}
+            </p>
+          );
+        } catch (error) {
+          // Handle errors from the process endpoint
+          console.error("Error fetching process data:", error);
+          newOutput = (
+            <p>
+              <span className="user">[X]</span> Error fetching image status.
+            </p>
+          );
+        }
+      } else {
+        newOutput = (
+          <p>
+            <span className="user">[✖]</span> corId is empty. Create a challenge
+            first.
+          </p>
+        );
+      }
     } else {
       newOutput = (
         <p>
@@ -207,12 +289,15 @@ const CreatorTerminal = () => {
       <p>
         {" "}
         steps to create a challenge: '
-        <span className="commands">ls image</span>' -&gt; '
-        <span className="commands">choose-image</span>' -&gt; '
+        <span className="commands">challenge-name</span>' -&gt; '
+        <span className="commands">ls image</span> ' -&gt; '
+        <span className="commands">choose-image</span>' -&gt; ' ' -&gt; '
+        <span className="commands">image-tag</span>' -&gt; '
         <span className="commands">creator-name</span>' -&gt; '
         <span className="commands">timer</span>' -&gt; '
         <span className="commands">participants</span>' -&gt; '
-        <span className="commands">create-challenge</span>'
+        <span className="commands">create-challenge</span>' then check the
+        status of your image using '<span className="commands">status</span>'
       </p>
 
       {/* <Help /> */}
