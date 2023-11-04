@@ -33,7 +33,7 @@ const CreatorTerminal = () => {
     } else if (input === "ls image") {
       try {
         const response = await axios.get(
-          "http://localhost:80/api/v1/platform/image",
+          "http://traefik.platform/api/v1/platform/image",
           {
             headers: {
               Authorization: "Basic " + btoa("test:test"), // Replace with your authorization token
@@ -152,7 +152,7 @@ const CreatorTerminal = () => {
         </p>
       );
       // Make a POST request to create a challenge
-      const endpoint = "http://localhost:80/api/v1/platform/challenge";
+      const endpoint = "http://traefik.platform/api/v1/platform/challenge";
 
       console.log("Request body:", requestBody);
       // Axios POST request with headers
@@ -189,7 +189,7 @@ const CreatorTerminal = () => {
         // Make a GET request to process the challenge with the stored corId
         try {
           const response = await axios.get(
-            `http://localhost:80/api/v1/platform/process/${corId}`
+            `http://traefik.platform/api/v1/platform/process/${corId}`
           );
           // .then((response) => {
           //   const eventStatus = response.data.eventStatus;

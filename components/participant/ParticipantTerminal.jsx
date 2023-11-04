@@ -31,7 +31,7 @@ const ParticipantTerminal = () => {
       setToken(token); // Store the token
 
       // Make a POST request to create a challenge with the stored token
-      const endpoint = "http://localhost:80/api/v1/platform/attempt";
+      const endpoint = "http://traefik.platform/api/v1/platform/attempt";
 
       const requestBody = {
         token: token,
@@ -63,7 +63,7 @@ const ParticipantTerminal = () => {
       // Check if corId is not empty
       if (corId) {
         // Make a GET request to get the challenge status with the stored corId
-        const statusEndpoint = `http://localhost:80/api/v1/platform/challenge/status/${corId}`;
+        const statusEndpoint = `http://traefik.platform/api/v1/platform/challenge/status/${corId}`;
         axios
           .get(statusEndpoint, {
             headers: {
@@ -99,7 +99,7 @@ const ParticipantTerminal = () => {
       // if (eventStatus === "challengeStarted") {
 
       // Make a GET request to get SSH Key, Port, and IP Address with the stored token
-      const startEndpoint = `http://localhost:80/api/v1/platform/attempt/${token}`;
+      const startEndpoint = `http://traefik.platform/api/v1/platform/attempt/${token}`;
 
       axios
         .get(startEndpoint, {
@@ -221,7 +221,7 @@ const ParticipantTerminal = () => {
         </span>
         <pre className="ascii-art">{asciiArt}</pre>
         <p> </p>
-        
+
         <p>
           {" "}
           type '<span className="commands">start</span>'' to begin your

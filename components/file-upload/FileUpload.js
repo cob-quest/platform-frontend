@@ -12,7 +12,6 @@ const FileUpload = () => {
   const [imageName, setImageName] = useState(""); // State for imageName
   const [creatorName, setCreatorName] = useState(""); // State for creatorName
 
-
   const onDrop = async (acceptedFiles) => {
     const formData = new FormData();
     formData.append("imageFile", acceptedFiles[0]);
@@ -27,7 +26,7 @@ const FileUpload = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:80/api/v1/trigger/image",
+        "http://traefik.platform/api/v1/trigger/image",
         formData,
         {
           headers: {
@@ -143,7 +142,6 @@ const FileUpload = () => {
           <span className="user">[✔]</span> Starting participant mode....
         </p>
       );
-    
     } else if (input === "clear") {
       setHistory([]);
       setInput("");
