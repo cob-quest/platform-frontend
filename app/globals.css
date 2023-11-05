@@ -201,7 +201,7 @@ p.response{
 /* Alternatively, inline styling in your component */
 /* <th style={{ margin: "0 10px" }}>Image Name</th> */
 
-input{
+/* input{
   border:none;
   background-color: unset;
   color:rgb(238, 238, 238);
@@ -213,7 +213,7 @@ input:focus{
   box-shadow: none;
   background-color: unset;
   
-}
+} */
 .type{
   display:flex;
   align-items: center;
@@ -291,25 +291,12 @@ a {
   margin: 3px 0px 0px 15px;
 }
 
-/* .skills {
-  color: rgb(235, 150, 97);
+.input-text-custom {
+  display: inline-block;
+  width: auto; /* Allow the width to grow with content */
+  padding: 4px; /* Adjust padding as needed */
+  /* Other styles */
 }
-
-.skills-text {
-  margin-top: 15px;
-  margin-bottom: 10px;
-}
-
-.projects-head {
-  color: #5dfa93;
-  margin-left: 20px;
-  text-decoration: none;
-}
-
-.projects-content {
-  margin: 0;
-  color: rgba(255, 196, 160, 0.66);
-} */
 
 .terminal-spacing {
   height: 200px;

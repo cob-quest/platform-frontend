@@ -14,6 +14,7 @@ const CreatorTerminal = () => {
 
   const handleInputChange = (e) => {
     setInput(e.target.value);
+    e.target.size = e.target.value.length + 1;
   };
 
   const handleFormSubmit = async (e) => {
@@ -123,6 +124,7 @@ const CreatorTerminal = () => {
             type="text"
             value={input}
             onChange={handleInputChange}
+            size={input.length + 1} /* This sets the initial size attribute */
             autoFocus
             className="input-text-custom commands"
           />

@@ -41,16 +41,19 @@ export default function MainTerminal() {
         router.push(previousPage);
         newOutput = (
           <p>
-            <span className="user">[✔]</span> Navigating back to the previous page...
+            <span className="user">[✔]</span> Navigating back to the previous
+            page...
           </p>
         );
       } else {
         newOutput = (
           <p>
-            <span className="user">[✘]</span> There is no previous page to navigate to.
+            <span className="user">[✘]</span> There is no previous page to
+            navigate to.
           </p>
         );
-      } } else if (input === "clear") {
+      }
+    } else if (input === "clear") {
       setHistory([]);
       setInput("");
       return;
