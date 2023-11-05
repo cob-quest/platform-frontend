@@ -46,7 +46,7 @@ const CreatorTerminal = () => {
         };
 
         const response = await axios.post(
-          "http://localhost/api/v1/platform/attempt",
+          "http://34.41.93.186/api/v1/platform/attempt",
           requestBody, // Pass the requestBody here
           {
             headers: {
@@ -72,10 +72,10 @@ const CreatorTerminal = () => {
       }
     } else if (input === "status") {
       try {
-        // endpoint is const statusEndpoint = `http://localhost:80/api/v1/platform/challenge/status/${corId}`
+        // endpoint is const statusEndpoint = `http://34.41.93.186:80/api/v1/platform/challenge/status/${corId}`
         if (corId) {
           const response = await axios.get(
-            `http://localhost/api/v1/platform/challenge/status/${corId}`,
+            `http://34.41.93.186/api/v1/platform/challenge/status/${corId}`,
             {
               headers: {
                 Authorization: "Basic " + btoa("test:test"), // Replace with your authorization token
@@ -96,10 +96,10 @@ const CreatorTerminal = () => {
       }
     } else if (input === "start") {
       try {
-        // endpoint is const statusEndpoint = `http://localhost:80/api/v1/platform/challenge/status/${corId}`
+        // endpoint is const statusEndpoint = `http://34.41.93.186:80/api/v1/platform/challenge/status/${corId}`
 
         const response = await axios.get(
-          `http://localhost/api/v1/platform/attempt/${token}`,
+          `http://34.41.93.186/api/v1/platform/attempt/${token}`,
           {
             headers: {
               Authorization: "Basic " + btoa("test:test"), // Replace with your authorization token
