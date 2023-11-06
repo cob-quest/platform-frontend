@@ -8,6 +8,7 @@ const CreatorTerminal = () => {
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
   const [history, setHistory] = useState([]);
+  
   const [requestBody, setRequestBody] = useState({
     imageName: "someimage",
     imageTag: "sometag",
@@ -18,6 +19,8 @@ const CreatorTerminal = () => {
   });
   const [corId, setCorId] = useState(""); // State to store corID
   const [imageNames, setImageNames] = useState([]); // State to store image name
+  const [images, setImages] = useState([]); // State to store image data including tags
+
 
   const router = useRouter();
 
@@ -51,13 +54,26 @@ const CreatorTerminal = () => {
         console.log("Response Data:", responseData);
         console.log("Response Status:", responseStatus);
 
-        const imageNames = responseData.map((image) => image.imageName);
-        setImageNames(imageNames);
-        console.log("Image names:", imageNames);
+        // const imageNames = responseData.map((image) => image.imageName);
+        // setImageNames(imageNames);
+        // console.log("Image names:", imageNames);
+        // newOutput = (
+        //   <div>
+        //     {imageNames.map((name, index) => (
+        //       <p key={index}>{name}</p>
+        //     ))}
+        //   </div>
+        // );
+        const imagesData = responseData.map((image) => ({
+          name: image.imageName,
+          tag: image.imageTag
+        }));
+        setImages(imagesData);
+        console.log("Images with tags:", imagesData);
         newOutput = (
           <div>
-            {imageNames.map((name, index) => (
-              <p key={index}>{name}</p>
+            {imagesData.map((imageData, index) => (
+              <p key={index}>{imageData.name} : {imageData.tag}</p>
             ))}
           </div>
         );
