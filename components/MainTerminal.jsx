@@ -57,6 +57,8 @@ export default function MainTerminal() {
       setHistory([]);
       setInput("");
       return;
+    } else if (input === "cd") {
+      
     } else {
       newOutput = (
         <p>

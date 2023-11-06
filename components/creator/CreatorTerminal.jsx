@@ -25,7 +25,7 @@ const CreatorTerminal = () => {
     let newOutput = "";
     if (input === "help") {
       newOutput = <Help />;
-    } else if (input === "create challenge") {
+    } else if (input === "create-challenge") {
       newOutput = (
         <p>
           <span className="user">[✔]</span> Opening challenge creation....
@@ -33,7 +33,7 @@ const CreatorTerminal = () => {
       );
       const newTab = window.open("/creator/create-challenge", "_blank");
       newTab.focus();
-    } else if (input === "create image") {
+    } else if (input === "create-image") {
       newOutput = (
         <p>
           <span className="user">[✔]</span> Opening image creation....
@@ -102,13 +102,10 @@ const CreatorTerminal = () => {
         <span className="symbols">~$</span>
         <span className="commands"> welcome@creator</span>
       </span>
-      <p> welcome to cob </p>
       <p>
         {" "}
-        would you like to '<span className="commands">create image</span>' or '
-        <span className="commands">create challenge</span>' or '
-        <span className="commands">manage challenge</span>' or '
-        <span className="commands">ls challenges</span>'?
+        would you like to '<span className="commands">create-challenge</span>'
+        or '<span className="commands">create-image</span>'?
       </p>
       {/* <Help /> */}
       {renderHistory()}

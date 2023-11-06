@@ -11,6 +11,7 @@
 import React, { useState } from "react";
 // import Help from "../../../components/participant/CreatorHelp";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const ParticipantTerminal = () => {
   const [input, setInput] = useState("");
@@ -24,6 +25,8 @@ const ParticipantTerminal = () => {
   const [port, setPort] = useState(""); // State to store Port
   const [ipAddress, setIpAddress] = useState(""); // State to store IP Address
   const [eventStatus, setEventStatus] = useState(""); // State to store Event Status
+
+  const router = useRouter();
 
   const handleInputChange = (e) => {
     setInput(e.target.value);
@@ -138,6 +141,13 @@ const ParticipantTerminal = () => {
         console.error("Error fetching challenge", error);
         // Handle errors as needed
       }
+    } else if (input === "cd") {
+      newOutput = (
+        <p>
+          <span className="user">[✔]</span> Starting participant mode....
+        </p>
+      );
+      router.push("/");
     } else {
       newOutput = (
         <p>
@@ -188,7 +198,13 @@ const ParticipantTerminal = () => {
         <span className="symbols">~$</span>
         <span className="commands"> welcome@creator</span>
       </span>
-      <p> all the best!</p>
+      <p>
+        enter your challenge token using '
+        <span className="commands">token</span>'! then check the status of your
+        challenge using '<span className="commands">status</span>' and start
+        your challenge using '<span className="commands">start</span>'
+      </p>
+      <p> cob wishes you all the best! </p>
 
       {/* <Help /> */}
       {renderHistory()}

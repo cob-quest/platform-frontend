@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import Help from "../../../components/creator/CreatorHelp";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const CreatorTerminal = () => {
   const [input, setInput] = useState("");
@@ -16,7 +17,9 @@ const CreatorTerminal = () => {
     participants: [],
   });
   const [corId, setCorId] = useState(""); // State to store corID
-  const [imageNames, setImageNames] = useState([]); // State to store image names
+  const [imageNames, setImageNames] = useState([]); // State to store image name
+
+  const router = useRouter();
 
   const handleInputChange = (e) => {
     setInput(e.target.value);
@@ -31,7 +34,7 @@ const CreatorTerminal = () => {
     let newOutput = "";
     if (input === "help") {
       newOutput = <Help />;
-    } else if (input === "ls image") {
+    } else if (input === "ls") {
       try {
         const response = await axios.get(
           "http://34.41.93.186/api/v1/platform/image",
@@ -237,6 +240,13 @@ const CreatorTerminal = () => {
           </p>
         );
       }
+    } else if(input === "cd") {
+      newOutput = (
+        <p>
+          <span className="user">[✔]</span> Starting participant mode....
+        </p>
+      );
+      router.push("/");
     } else {
       newOutput = (
         <p>
@@ -291,7 +301,7 @@ const CreatorTerminal = () => {
         {" "}
         steps to create a challenge: '
         <span className="commands">challenge-name</span>' -&gt; '
-        <span className="commands">ls image</span> ' -&gt; '
+        <span className="commands">ls</span> ' -&gt; '
         <span className="commands">choose-image</span>' -&gt; ' ' -&gt; '
         <span className="commands">image-tag</span>' -&gt; '
         <span className="commands">creator-name</span>' -&gt; '

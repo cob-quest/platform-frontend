@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import { CursorArrowRaysIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
+import { useRouter } from "next/navigation";
+
 
 const CreateImage = () => {
   const [input, setInput] = useState("");
@@ -15,6 +17,8 @@ const CreateImage = () => {
   const [creatorName, setCreatorName] = useState(""); // State for creatorName
   const [imageTag, setImageTag] = useState(""); // State for imageTag
   const [corId, setCorId] = useState(""); // State to store corID
+
+  const router = useRouter();
 
   const onDrop = async (acceptedFiles) => {
     const formData = new FormData();
@@ -217,6 +221,13 @@ const CreateImage = () => {
       setHistory([]);
       setInput("");
       return;
+    } else if (input === "cd") {
+      newOutput = (
+        <p>
+          <span className="user">[✔]</span> Starting participant mode....
+        </p>
+      );
+      router.push("/");
     } else {
       newOutput = (
         <p>
