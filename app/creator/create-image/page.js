@@ -221,7 +221,7 @@ const CreateImage = () => {
       setInput("");
       return;
     } else if (input === "cd") {
-      router.push("/");
+      router.push("/creator");
     } else {
       newOutput = (
         <p>

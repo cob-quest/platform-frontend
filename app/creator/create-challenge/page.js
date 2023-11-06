@@ -241,7 +241,7 @@ const CreatorTerminal = () => {
         );
       }
     } else if (input === "cd") {
-      router.push("/");
+      router.push("/creator");
     } else {
       newOutput = (
         <p>
