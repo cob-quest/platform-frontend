@@ -5,7 +5,6 @@ import { CursorArrowRaysIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
-
 const CreateImage = () => {
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
@@ -222,11 +221,6 @@ const CreateImage = () => {
       setInput("");
       return;
     } else if (input === "cd") {
-      newOutput = (
-        <p>
-          <span className="user">[✔]</span> Starting participant mode....
-        </p>
-      );
       router.push("/");
     } else {
       newOutput = (

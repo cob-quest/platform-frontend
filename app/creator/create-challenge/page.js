@@ -240,12 +240,7 @@ const CreatorTerminal = () => {
           </p>
         );
       }
-    } else if(input === "cd") {
-      newOutput = (
-        <p>
-          <span className="user">[✔]</span> Starting participant mode....
-        </p>
-      );
+    } else if (input === "cd") {
       router.push("/");
     } else {
       newOutput = (

@@ -142,11 +142,6 @@ const ParticipantTerminal = () => {
         // Handle errors as needed
       }
     } else if (input === "cd") {
-      newOutput = (
-        <p>
-          <span className="user">[✔]</span> Starting participant mode....
-        </p>
-      );
       router.push("/");
     } else {
       newOutput = (
