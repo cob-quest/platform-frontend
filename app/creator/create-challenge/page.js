@@ -39,7 +39,7 @@ const CreatorTerminal = () => {
     } else if (input === "ls") {
       try {
         const response = await axios.get(
-          "http://34.41.93.186/api/v1/platform/image",
+          "/api/v1/platform/image",
           {
             headers: {
               Authorization: "Basic " + btoa("test:test"), // Replace with your authorization token
@@ -173,7 +173,7 @@ const CreatorTerminal = () => {
         </p>
       );
       // Make a POST request to create a challenge
-      const endpoint = "http://34.41.93.186/api/v1/platform/challenge";
+      const endpoint = "/api/v1/platform/challenge";
 
       console.log("Request body:", requestBody);
       // Axios POST request with headers
@@ -210,7 +210,7 @@ const CreatorTerminal = () => {
         // Make a GET request to process the challenge with the stored corId
         try {
           const response = await axios.get(
-            `http://34.41.93.186/api/v1/platform/process/${corId}`
+            `/api/v1/platform/process/${corId}`
           );
           // .then((response) => {
           //   const eventStatus = response.data.eventStatus;
@@ -311,7 +311,7 @@ const CreatorTerminal = () => {
       </span>
       <p>
         {" "}
-        
+
         steps to create a challenge: '
         <span className="commands">challenge-name</span>' -&gt; '
         <span className="commands">ls</span> ' -&gt; '
