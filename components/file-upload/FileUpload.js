@@ -26,7 +26,7 @@ const FileUpload = () => {
 
     try {
       const response = await axios.post(
-        "http://34.41.93.186/api/v1/trigger/image",
+        "/api/v1/trigger/image",
         formData,
         {
           headers: {

@@ -42,7 +42,7 @@ const CreateImage = () => {
 
     try {
       const response = await axios.post(
-        "http://34.41.93.186/api/v1/platform/image",
+        "/api/v1/platform/image",
         formData,
         {
           headers: {
@@ -108,7 +108,7 @@ const CreateImage = () => {
       if (corId) {
         try {
           const response = await axios.get(
-            `http://34.41.93.186/api/v1/platform/process/${corId}`
+            `/api/v1/platform/process/${corId}`
           );
           // Process the response from the process endpoint
           console.log("Process response:", response.data);
