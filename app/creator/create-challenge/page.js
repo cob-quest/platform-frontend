@@ -311,10 +311,11 @@ const CreatorTerminal = () => {
       </span>
       <p>
         {" "}
+        
         steps to create a challenge: '
         <span className="commands">challenge-name</span>' -&gt; '
         <span className="commands">ls</span> ' -&gt; '
-        <span className="commands">image-name</span>' -&gt; ' ' -&gt; '
+        <span className="commands">image-name</span>' -&gt; '
         <span className="commands">image-tag</span>' -&gt; '
         <span className="commands">creator-name</span>' -&gt; '
         <span className="commands">timer</span>' -&gt; '
@@ -322,6 +323,7 @@ const CreatorTerminal = () => {
         <span className="commands">create-challenge</span>' then check the
         status of your image using '<span className="commands">status</span>'
       </p>
+      {/* Instructions */}
 
       {/* <Help /> */}
       {renderHistory()}
