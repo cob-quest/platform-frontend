@@ -28,22 +28,17 @@ const CreateImage = () => {
   const router = useRouter();
 
   const onDrop = async (acceptedFiles) => {
-    const formData = new FormData();
-    formData.append("imageFile", acceptedFiles[0]);
-    formData.append("imageName", imageName); // Use the state value
-    formData.append("creatorName", creatorName); // Use the state value
-    formData.append("imageTag", imageTag); // Use the state value
+    requestBody.append("imageFile", acceptedFiles[0]);
+    // formData.append("imageName", imageName); // Use the state value
+    // formData.append("creatorName", creatorName); // Use the state value
+    // formData.append("imageTag", imageTag); // Use the state value
 
-    // Log the content of the formData
-    console.log("Form Data Contents:");
-    for (const pair of formData.entries()) {
-      console.log(pair[0], pair[1]);
-    }
+    console.log("Request body:", requestBody);
 
     try {
       const response = await axios.post(
         "http://34.41.93.186/api/v1/platform/image",
-        formData,
+        requestBody,
         {
           headers: {
             "Content-Type": "multipart/form-data",
