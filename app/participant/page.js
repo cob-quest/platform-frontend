@@ -99,6 +99,7 @@ const ParticipantTerminal = () => {
         // Handle errors as needed
       }
     } else if (input === "start") {
+      console.log("eventStatus when start:", eventStatus);
       if (eventStatus === "challengeStarted") {
         try {
           // endpoint is const statusEndpoint = `http://34.41.93.186:80/api/v1/platform/challenge/status/${corId}`
