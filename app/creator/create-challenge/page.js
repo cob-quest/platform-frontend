@@ -8,7 +8,7 @@ const CreatorTerminal = () => {
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
   const [history, setHistory] = useState([]);
-  
+
   const [requestBody, setRequestBody] = useState({
     imageName: "someimage",
     imageTag: "sometag",
@@ -20,7 +20,6 @@ const CreatorTerminal = () => {
   const [corId, setCorId] = useState(""); // State to store corID
   const [imageNames, setImageNames] = useState([]); // State to store image name
   const [images, setImages] = useState([]); // State to store image data including tags
-
 
   const router = useRouter();
 
@@ -66,14 +65,16 @@ const CreatorTerminal = () => {
         // );
         const imagesData = responseData.map((image) => ({
           name: image.imageName,
-          tag: image.imageTag
+          tag: image.imageTag,
         }));
         setImages(imagesData);
         console.log("Images with tags:", imagesData);
         newOutput = (
           <div>
             {imagesData.map((imageData, index) => (
-              <p key={index}>{imageData.name} : {imageData.tag}</p>
+              <p key={index}>
+                {imageData.name} : {imageData.tag}
+              </p>
             ))}
           </div>
         );
@@ -82,9 +83,9 @@ const CreatorTerminal = () => {
         console.error("Error fetching images:", error);
         // Handle errors as needed
       }
-    } else if (input.startsWith("choose-image")) {
+    } else if (input.startsWith("image-name")) {
       // imageName
-      const imageName = input.replace("choose-image", "").trim();
+      const imageName = input.replace("image-name", "").trim();
       newOutput = (
         <p>
           <span className="user">[✔]</span> {imageName} has been chosen.
@@ -313,7 +314,7 @@ const CreatorTerminal = () => {
         steps to create a challenge: '
         <span className="commands">challenge-name</span>' -&gt; '
         <span className="commands">ls</span> ' -&gt; '
-        <span className="commands">choose-image</span>' -&gt; ' ' -&gt; '
+        <span className="commands">image-name</span>' -&gt; ' ' -&gt; '
         <span className="commands">image-tag</span>' -&gt; '
         <span className="commands">creator-name</span>' -&gt; '
         <span className="commands">timer</span>' -&gt; '
