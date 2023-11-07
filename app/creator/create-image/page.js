@@ -17,7 +17,7 @@ const CreateImage = () => {
   const [imageTag, setImageTag] = useState(""); // State for imageTag
   const [corId, setCorId] = useState(""); // State to store corID
   const [requestBody, setRequestBody] = useState({
-    imageName: "sometag",
+    imageName: "someName",
     creatorName: "someCreator",
     imageTag: "someTag",
     // imageFile to be appended
@@ -32,6 +32,10 @@ const CreateImage = () => {
     // formData.append("imageName", imageName); // Use the state value
     // formData.append("creatorName", creatorName); // Use the state value
     // formData.append("imageTag", imageTag); // Use the state value
+    // Append additional fields from requestBody
+    formData.append("imageName", requestBody.imageName);
+    formData.append("creatorName", requestBody.creatorName);
+    formData.append("imageTag", requestBody.imageTag);
 
     console.log("Request body:", requestBody);
 
@@ -155,7 +159,7 @@ const CreateImage = () => {
         // setImageName(name); // Set the state
         setRequestBody((prevRequestBody) => ({
           ...prevRequestBody,
-          imageName,
+          imageName: name,
         })); // Update state
         console.log("Request body:", requestBody);
         newOutput = (
@@ -178,7 +182,7 @@ const CreateImage = () => {
         // setCreatorName(name); // Set the state
         setRequestBody((prevRequestBody) => ({
           ...prevRequestBody,
-          creatorName,
+          creatorName: name,
         })); // Update state
         console.log("Request body:", requestBody);
         newOutput = (
@@ -201,7 +205,7 @@ const CreateImage = () => {
         // setImageTag(name); // Set the state
         setRequestBody((prevRequestBody) => ({
           ...prevRequestBody,
-          imageTag,
+          imageTag: name,
         })); // Update state
         console.log("Request body:", requestBody);
         newOutput = (
