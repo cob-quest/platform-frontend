@@ -54,7 +54,7 @@ const CreateImage = () => {
       if (response.status === 200) {
         setCorId(response.data.corId);
         console.log("CorId:", response.data.corId);
-        setOutput = (
+        newOutput = (
           <p>
             <span className="user">[✔]</span> File has uploaded and image is
             starting to build! Check the status to see when it has finished
@@ -62,7 +62,7 @@ const CreateImage = () => {
           </p>
         );
       } else {
-        setOutput = (
+        newOutput = (
           <p>
             <span className="user">[X]</span> Image upload failed. Please try
             again.
@@ -79,8 +79,16 @@ const CreateImage = () => {
       console.error("File upload error:", error);
       if (error.response) {
         console.log(error.response.status); // Access the status code from the error response
+        // Update the newOutput variable with the error message
+        newOutput = (
+          <p>
+            <span className="user">[X]</span> File upload error. Please try
+            again.
+          </p>
+        );
       }
     }
+    setOutput(newOutput);
   };
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
