@@ -87,6 +87,7 @@ const ParticipantTerminal = () => {
             }
           );
           const eventStatus = response.data.eventStatus;
+          setEventStatus(eventStatus);
           console.log("Challenge status:", eventStatus);
           newOutput = (
             <p className="input-text-custom commands">
