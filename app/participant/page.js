@@ -21,9 +21,9 @@ const ParticipantTerminal = () => {
 
   const [token, setToken] = useState(""); // State to store token
   const [corId, setCorId] = useState(""); // State to store corId
-  const [sshKey, setSshKey] = useState(""); // State to store SSH Key
-  const [port, setPort] = useState(""); // State to store Port
-  const [ipAddress, setIpAddress] = useState(""); // State to store IP Address
+  // const [sshKey, setSshKey] = useState(""); // State to store SSH Key
+  // const [port, setPort] = useState(""); // State to store Port
+  // const [ipAddress, setIpAddress] = useState(""); // State to store IP Address
   const [eventStatus, setEventStatus] = useState(""); // State to store Event Status
 
   const router = useRouter();
@@ -99,47 +99,58 @@ const ParticipantTerminal = () => {
         // Handle errors as needed
       }
     } else if (input === "start") {
-      try {
-        // endpoint is const statusEndpoint = `http://34.41.93.186:80/api/v1/platform/challenge/status/${corId}`
+      if (eventStatus === "challengeStarted") {
+        try {
+          // endpoint is const statusEndpoint = `http://34.41.93.186:80/api/v1/platform/challenge/status/${corId}`
 
-        const response = await axios.get(
-          `http://34.41.93.186/api/v1/platform/attempt/${token}`,
-          {
-            headers: {
-              Authorization: "Basic " + btoa("test:test"), // Replace with your authorization token
-            },
-          }
-        );
-        const sshKeyResponse = response.data.sshkey;
-        const portResponse = response.data.port;
-        const ipAddressResponse = response.data.ipaddress;
-        setSshKey(sshKeyResponse);
-        setPort(portResponse);
-        setIpAddress(ipAddressResponse);
-        console.log("SSH Key:", sshKeyResponse);
-        console.log("Port:", portResponse);
-        console.log("IP Address:", ipAddressResponse);
+          const response = await axios.get(
+            `http://34.41.93.186/api/v1/platform/attempt/${token}`,
+            {
+              headers: {
+                Authorization: "Basic " + btoa("test:test"), // Replace with your authorization token
+              },
+            }
+          );
+          const sshKeyResponse = response.data.sshkey;
+          const portResponse = response.data.port;
+          const ipAddressResponse = response.data.ipaddress;
+          // setSshKey(sshKeyResponse);
+          // setPort(portResponse);
+          // setIpAddress(ipAddressResponse);
+          console.log("SSH Key:", sshKeyResponse);
+          console.log("Port:", portResponse);
+          console.log("IP Address:", ipAddressResponse);
 
+          newOutput = (
+            <div>
+              <p>
+                {" "}
+                Challenge is retrieved and here are your details! All the best!{" "}
+              </p>
+              <p className="input-text-custom commands">
+                <span className="user">[✔]</span> SSH Key: {sshKeyResponse}
+              </p>
+              <p className="input-text-custom commands">
+                <span className="user">[✔]</span> Port: {portResponse}
+              </p>
+              <p className="input-text-custom commands">
+                <span className="user">[✔]</span> IP Address:{" "}
+                {ipAddressResponse}
+              </p>
+            </div>
+          );
+        } catch (error) {
+          console.error("Error fetching challenge", error);
+          // Handle errors as needed
+        }
+      } else {
+        // Display an error message if eventStatus is not "challengeStarted"
         newOutput = (
-          <div>
-            <p>
-              {" "}
-              Challenge is retrieved and here are your details! All the best!{" "}
-            </p>
-            <p className="input-text-custom commands">
-              <span className="user">[✔]</span> SSH Key: {sshKey}
-            </p>
-            <p className="input-text-custom commands">
-              <span className="user">[✔]</span> Port: {port}
-            </p>
-            <p className="input-text-custom commands">
-              <span className="user">[✔]</span> IP Address: {ipAddress}
-            </p>
-          </div>
+          <p>
+            <span className="user">[X]</span> Cannot start challenge. The event
+            status is not "challengeStarted."
+          </p>
         );
-      } catch (error) {
-        console.error("Error fetching challenge", error);
-        // Handle errors as needed
       }
     } else if (input === "cd") {
       router.push("/");
