@@ -16,6 +16,14 @@ const CreateImage = () => {
   const [creatorName, setCreatorName] = useState(""); // State for creatorName
   const [imageTag, setImageTag] = useState(""); // State for imageTag
   const [corId, setCorId] = useState(""); // State to store corID
+  const [requestBody, setRequestBody] = useState({
+    imageName: "sometag",
+    creatorName: "someCreator",
+    imageTag: "someTag",
+    // imageFile to be appended
+  });
+  // Process input command
+  let newOutput = "";
 
   const router = useRouter();
 
@@ -32,7 +40,6 @@ const CreateImage = () => {
       console.log(pair[0], pair[1]);
     }
 
-    let newOutput = "";
     try {
       const response = await axios.post(
         "http://34.41.93.186/api/v1/platform/image",
@@ -44,14 +51,14 @@ const CreateImage = () => {
           },
         }
       );
-
       if (response.status === 200) {
         setCorId(response.data.corId);
         console.log("CorId:", response.data.corId);
         newOutput = (
           <p>
-            <span className="user">[✔]</span> Image has started building! Check
-            the status to see when it has finished building!
+            <span className="user">[✔]</span> File has uploaded and image is
+            starting to build! Check the status to see when it has finished
+            building!
           </p>
         );
       } else {
@@ -87,25 +94,9 @@ const CreateImage = () => {
     e.preventDefault();
     setOutput("");
 
-    // Process input command
-    let newOutput = "";
     if (input === "help") {
       newOutput = <Help />;
     } else if (input === "status") {
-      // call endpoint to get image status
-      // newOutput = (
-      //   <div>
-      //     <p>
-      //       <span className="user">[✔]</span> Listing image status...
-      //     </p>
-      //     {loading ? (
-      //       <p>Loading image data...</p>
-      //     ) : (
-      //       <ImageTable data={imageData} />
-      //     )}
-      //   </div>
-      // );
-      // Make a request to the process endpoint using the stored corId
       if (corId) {
         try {
           const response = await axios.get(
@@ -166,7 +157,12 @@ const CreateImage = () => {
       // Handle 'image-name' input
       const name = input.replace("image-name", "").trim();
       if (name) {
-        setImageName(name); // Set the state
+        // setImageName(name); // Set the state
+        setRequestBody((prevRequestBody) => ({
+          ...prevRequestBody,
+          imageName,
+        })); // Update state
+        console.log("Request body:", requestBody);
         newOutput = (
           <p>
             <span className="user">[✔]</span> Image name has been set to: {name}
@@ -184,7 +180,12 @@ const CreateImage = () => {
       // Handle 'creator-name' input
       const name = input.replace("creator-name", "").trim();
       if (name) {
-        setCreatorName(name); // Set the state
+        // setCreatorName(name); // Set the state
+        setRequestBody((prevRequestBody) => ({
+          ...prevRequestBody,
+          creatorName,
+        })); // Update state
+        console.log("Request body:", requestBody);
         newOutput = (
           <p>
             <span className="user">[✔]</span> Creator name set to: {name}
@@ -202,7 +203,12 @@ const CreateImage = () => {
       // Handle 'creator-name' input
       const name = input.replace("image-tag", "").trim();
       if (name) {
-        setImageTag(name); // Set the state
+        // setImageTag(name); // Set the state
+        setRequestBody((prevRequestBody) => ({
+          ...prevRequestBody,
+          imageTag,
+        })); // Update state
+        console.log("Request body:", requestBody);
         newOutput = (
           <p>
             <span className="user">[✔]</span> Image tag set to: {name}
