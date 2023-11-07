@@ -54,7 +54,7 @@ const CreateImage = () => {
       if (response.status === 200) {
         setCorId(response.data.corId);
         console.log("CorId:", response.data.corId);
-        newOutput = (
+        setOutput = (
           <p>
             <span className="user">[✔]</span> File has uploaded and image is
             starting to build! Check the status to see when it has finished
@@ -62,7 +62,7 @@ const CreateImage = () => {
           </p>
         );
       } else {
-        newOutput = (
+        setOutput = (
           <p>
             <span className="user">[X]</span> Image upload failed. Please try
             again.
