@@ -12,6 +12,8 @@ import React, { useState } from "react";
 // import Help from "../../../components/participant/CreatorHelp";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { BiCopy } from 'react-icons/bi';
+import { toast } from "react-toastify";
 
 const ParticipantTerminal = () => {
   const [input, setInput] = useState("");
@@ -32,6 +34,12 @@ const ParticipantTerminal = () => {
     setInput(e.target.value);
     e.target.size = e.target.value.length + 1;
   };
+
+  const handleCopy = async (txt, type) => {
+    navigator.clipboard.writeText(txt);
+
+    toast.success(`Copied ${type} to clipboard`);
+  }
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -130,14 +138,16 @@ const ParticipantTerminal = () => {
                 Challenge is retrieved and here are your details! All the best!{" "}
               </p>
               <p className="input-text-custom commands">
-                <span className="user">[✔]</span> SSH Key: {sshKeyResponse}
+                <span className="user">[✔]</span> SSH Key: {sshKeyResponse.slice(0, 10) + "..."}
+                <BiCopy className="cursor-pointer" onClick={_ => handleCopy(sshKeyResponse, "SSH Key")} />
               </p>
               <p className="input-text-custom commands">
                 <span className="user">[✔]</span> Port: {portResponse}
+                <BiCopy className="cursor-pointer" onClick={_ => handleCopy(portResponse, "Port")} />
               </p>
               <p className="input-text-custom commands">
-                <span className="user">[✔]</span> IP Address:{" "}
-                {ipAddressResponse}
+                <span className="user">[✔]</span> IP Address: {ipAddressResponse}
+                <BiCopy className="cursor-pointer" onClick={_ => handleCopy(ipAddressResponse, "IP")} />
               </p>
             </div>
           );
