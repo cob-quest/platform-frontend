@@ -71,34 +71,35 @@ function CustomTable(props) {
         </tr>
       </thead>
       <tbody>
-        {props.tableBody.map(({ name, job, org, online, date }, index) => {
+        {props.tableBody.map((v, index) => {
           const isLast = index === props.tableBody.length - 1;
           const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
 
           return (
-            <tr key={name}>
+            <tr key={v.participant + v.challengeName}>
               <td className={classes}>
                 <div className="flex items-center gap-3">
-                  <div className="flex flex-col text-sm">{name}</div>
+                  <div className="flex flex-col text-sm">{v.challengeName}</div>
                 </div>
               </td>
               <td className={classes}>
                 <div className="flex flex-col">
-                  {job}
-                  {org}
+                  {v.participant}
                 </div>
               </td>
-              <td className={classes}>
+              <td
+                key={v.participant + v.result}
+                className={classes}>
                 <div className="w-max">
-                  <span
-                    className={`text-sm ${online ? "text-green-500" : "text-red-500"
-                      }`}
-                  >
-                    {online ? "PASSED" : "FAILED"}
-                  </span>
+                  {
+                    v.result == 0 ? <span
+                      className="text-amber-300"
+                    >Not Attempted</span>
+                      :
+                      <span
+                      > {v.result} / {100} </span>}
                 </div>
               </td>
-              <td className={classes}>{date}</td>
               <td className={classes}>
                 <button
                   className="hover:text-blue-500"
@@ -115,7 +116,11 @@ function CustomTable(props) {
   );
 }
 
-export default function ChallengeResults({ router }) {
+export default function ChallengeResults({
+  router,
+  rowHeader: header,
+  rowBody: body,
+}) {
 
 
   function handleAddChallenge() {
@@ -146,8 +151,8 @@ export default function ChallengeResults({ router }) {
         </div>
       </div>
       <CustomTable
-        tableHeader={TABLE_HEAD}
-        tableBody={TABLE_ROWS}
+        tableHeader={header}
+        tableBody={body}
         handleResend={handleResend}
       />
     </div>
