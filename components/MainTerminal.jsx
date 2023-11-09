@@ -97,7 +97,7 @@ export default function MainTerminal() {
               <span className="commands">
                 user
                 <span className="symbols">@</span>
-                <span className="user">cob.dev:</span>
+                <span className="user">cob.quest:</span>
                 <span className="symbols">~$ </span>
               </span>
               <span className="commands">{item.input}</span>
@@ -121,7 +121,7 @@ export default function MainTerminal() {
         <span className="commands">
           user
           <span className="symbols">@</span>
-          <span className="user">cob.dev:</span>
+          <span className="user">cob.quest:</span>
           <span className="symbols">~$ </span>
         </span>
         <form onSubmit={handleFormSubmit}>

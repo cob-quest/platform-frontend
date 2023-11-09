@@ -172,7 +172,7 @@ const FileUpload = () => {
               <span className="commands">
                 creator
                 <span className="symbols">@</span>
-                <span className="user">cob.dev:</span>
+                <span className="user">cob.quest:</span>
                 <span className="symbols">~$ </span>
               </span>
               <span className="commands">{item.input}</span>
@@ -192,7 +192,7 @@ const FileUpload = () => {
       <span className="commands">
         creator
         <span className="symbols">@</span>
-        <span className="user">cob.dev:</span>
+        <span className="user">cob.quest:</span>
         <span className="symbols">~$</span>
         <span className="commands"> welcome@creator</span>
       </span>
@@ -210,7 +210,7 @@ const FileUpload = () => {
         <span className="commands">
           creator
           <span className="symbols">@</span>
-          <span className="user">cob.dev:</span>
+          <span className="user">cob.quest:</span>
           <span className="symbols">~$ </span>
         </span>
         <form onSubmit={handleFormSubmit}>

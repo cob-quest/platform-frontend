@@ -178,7 +178,7 @@ const ParticipantTerminal = () => {
               <span className="commands">
                 participant
                 <span className="symbols">@</span>
-                <span className="user">cob.dev:</span>
+                <span className="user">cob.quest:</span>
                 <span className="symbols">~$ </span>
               </span>
               <span className="commands">{item.input}</span>
@@ -215,7 +215,7 @@ const ParticipantTerminal = () => {
         <span className="commands">
           participant
           <span className="symbols">@</span>
-          <span className="user">cob.dev:</span>
+          <span className="user">cob.quest:</span>
           <span className="symbols">~$</span>
           <span className="commands"> welcome@participant</span>
         </span>
@@ -241,7 +241,7 @@ const ParticipantTerminal = () => {
         <span className="commands">
           participant
           <span className="symbols">@</span>
-          <span className="user">cob.dev:</span>
+          <span className="user">cob.quest:</span>
           <span className="symbols">~$ </span>
         </span>
 

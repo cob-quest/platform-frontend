@@ -18,7 +18,7 @@ const Intro = () => {
       <span className="commands">
         user
         <span className="symbols">@</span>
-        <span className="user">cob.dev:</span>
+        <span className="user">cob.quest:</span>
         <span className="symbols">~$</span>
         <span className="commands"> welcome@user</span>
       </span>
