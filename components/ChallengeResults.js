@@ -97,7 +97,7 @@ function CustomTable(props) {
                     >Not Attempted</span>
                       :
                       <span
-                      > {v.result} / {100} </span>}
+                      > {v.result} / {4} </span>}
                 </div>
               </td>
               <td className={classes}>
