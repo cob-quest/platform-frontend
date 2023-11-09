@@ -55,12 +55,12 @@ const TABLE_ROWS = [
   },
 ];
 
-function CustomTable() {
+function CustomTable(props) {
   return (
     <table className="w-full min-w-max table-auto text-left text-white">
       <thead>
         <tr>
-          {TABLE_HEAD.map((head) => (
+          {props.tableHeader.map((head) => (
             <th
               key={head}
               className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 text-sm"
@@ -71,8 +71,8 @@ function CustomTable() {
         </tr>
       </thead>
       <tbody>
-        {TABLE_ROWS.map(({ name, job, org, online, date }, index) => {
-          const isLast = index === TABLE_ROWS.length - 1;
+        {props.tableBody.map(({ name, job, org, online, date }, index) => {
+          const isLast = index === props.tableBody.length - 1;
           const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
 
           return (
@@ -91,9 +91,8 @@ function CustomTable() {
               <td className={classes}>
                 <div className="w-max">
                   <span
-                    className={`text-sm ${
-                      online ? "text-green-500" : "text-red-500"
-                    }`}
+                    className={`text-sm ${online ? "text-green-500" : "text-red-500"
+                      }`}
                   >
                     {online ? "PASSED" : "FAILED"}
                   </span>
@@ -103,7 +102,7 @@ function CustomTable() {
               <td className={classes}>
                 <button
                   className="hover:text-blue-500"
-                  onClick={() => handleResend(name)}
+                  onClick={() => props.handleResend(name)}
                 >
                   <PaperAirplaneIcon className="h-4 w-4" />
                 </button>
@@ -117,15 +116,16 @@ function CustomTable() {
 }
 
 export default function ChallengeResults({ router }) {
- 
+
 
   function handleAddChallenge() {
     // Handle adding a challenge
     router.push("/creator/create-challenge");
   }
-  
+
   function handleResend(participantName) {
     // Handle resending a challenge to the participant
+    console.log("handleResend:" + participantName)
   }
 
   return (
@@ -144,14 +144,11 @@ export default function ChallengeResults({ router }) {
           </button>
         </div>
       </div>
-      <CustomTable />
-      {/* <div className="flex items-center justify-between border-t border-blue-gray-50 p-4 text-sm">
-        Page 1 of 10
-        <div className="flex gap-2">
-          <button className="border p-2 text-sm">Previous</button>
-          <button className="border p-2 text-sm">Next</button>
-        </div>
-      </div> */}
+      <CustomTable
+        tableHeader={TABLE_HEAD}
+        tableBody={TABLE_ROWS}
+        handleResend={handleResend}
+      />
     </div>
   );
 }

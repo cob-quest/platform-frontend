@@ -26,7 +26,7 @@ const Intro = () => {
       <p> </p>
       <p>
         {" "}
-        would you like to be a '<span className="commands">creator</span>' or '
+        would you like to start as a '<span className="commands">creator</span>' or '
         <span className="commands">participant</span>'?
       </p>
     </>
