@@ -8,6 +8,12 @@ export default function Home() {
 
   const [attempts, setAttempts] = useState([])
 
+  document.body.addEventListener('keydown', function(event) {
+    if (event.key === 'q') {
+      router.push("/creator")
+    }
+  });
+
   const onLoad = async () => {
     //const response = await axios.get(
     //"/api/v1/platform/image",

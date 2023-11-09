@@ -293,7 +293,8 @@ const CreateImage = () => {
         <span className="commands">creator-name &lt;creator-name&gt;</span> to set creator name  <br />
         <span className="commands">upload</span> to upload an image zip file<br />
         <br />
-        <span className="commands">status</span> to check the status of image creation
+        <span className="commands">status</span> to check the status of image creation <br />
+        <span className="commands">cd</span> to return to the previous page
       </p>
 
       {/* <Help /> */}

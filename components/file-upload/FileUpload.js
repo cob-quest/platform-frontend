@@ -203,6 +203,8 @@ const FileUpload = () => {
         would you like to '<span className="commands">create image</span>' or '
         <span className="commands">create challenge</span>' or '
         <span className="commands">manage challenge</span>'?
+        <br /> <br />
+        <span className="commands">cd</span> to return to the previous page
       </p>
       {/* <Help /> */}
       {renderHistory()}

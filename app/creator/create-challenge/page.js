@@ -322,9 +322,9 @@ const CreatorTerminal = () => {
         <br />
         <span className="commands">ls</span> to view your available images  <br />
         <span className="commands">create-challenge</span> to create a challenge with the values set<br />
-        <span className="commands">status</span> to then check the status of challenge creation
+        <span className="commands">status</span> to then check the status of challenge creation <br />
+        <span className="commands">cd</span> to return to the previous page
       </p>
-      <br />
 
       {/* <Help /> */}
       {renderHistory()}

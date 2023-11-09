@@ -130,6 +130,7 @@ export default function ChallengeResults({ router }) {
 
   return (
     <div className="h-full w-full">
+      <div className="m-6 text-black bg-white p-1" >manage-challenge page (press q to quit)</div>
       <div className="m-8 text-white  flex items-center justify-between gap-5">
         <div>
           <h1 className="font-bold text-3xl">overall challenge results</h1>

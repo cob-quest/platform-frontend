@@ -31,24 +31,27 @@ const CreatorTerminal = () => {
           <span className="user">[✔]</span> Opening challenge creation....
         </p>
       );
-      const newTab = window.open("/creator/create-challenge", "_blank");
-      newTab.focus();
+      //const newTab = window.open("/creator/create-challenge", "_blank");
+      //newTab.focus();
+      router.push("/creator/create-challenge")
     } else if (input === "manage-challenge") {
       newOutput = (
         <p>
           <span className="user">[✔]</span> Opening manage challenge....
         </p>
       );
-      const newTab = window.open("/creator/manage-challenge", "_blank");
-      newTab.focus();
+      //const newTab = window.open("/creator/manage-challenge", "_blank");
+      //newTab.focus();
+      router.push("/creator/manage-challenge")
     } else if (input === "create-image") {
       newOutput = (
         <p>
           <span className="user">[✔]</span> Opening image creation....
         </p>
       );
-      const newTab = window.open("/creator/create-image", "_blank");
-      newTab.focus();
+      //const newTab = window.open("/creator/create-image", "_blank");
+      //newTab.focus();
+      router.push("/creator/create-image")
     } else if (input === "cd") {
       newOutput = (
         <p>
@@ -115,6 +118,8 @@ const CreatorTerminal = () => {
         would you like to '<span className="commands">create-challenge</span>',
         '<span className="commands">manage-challenge</span>'
         or '<span className="commands">create-image</span>'?
+        <br /><br />
+        <span className="commands">cd</span> to return to the previous page
       </p>
       {/* <Help /> */}
       {renderHistory()}
