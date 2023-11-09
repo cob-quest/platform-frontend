@@ -12,7 +12,7 @@ import React, { useState } from "react";
 // import Help from "../../../components/participant/CreatorHelp";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { BiCopy } from 'react-icons/bi';
+import { BiCopy } from "react-icons/bi";
 import { toast } from "react-toastify";
 
 const ParticipantTerminal = () => {
@@ -39,7 +39,7 @@ const ParticipantTerminal = () => {
     navigator.clipboard.writeText(txt);
 
     toast.success(`Copied ${type} to clipboard`);
-  }
+  };
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -66,21 +66,28 @@ const ParticipantTerminal = () => {
             },
           }
         );
-        // Iterate through the responseData to display image names
-        // Extract image names and set them in the state
-        const responseData = response.data;
-        console.log("Challenge is being created:", response.data);
+
+        if (response.status === 200) {
+          // Token is valid, continue with processing
+          const responseData = response.data;
+          console.log("Challenge is being created:", response.data);
+          newOutput = (
+            <p>
+              <span className="user">[✔]</span> Token is valid! Challenge has
+              been retrieved!
+            </p>
+          );
+          setCorId(responseData.corId);
+        }
+        setOutput(newOutput);
+      } catch (error) {
         newOutput = (
           <p>
-            <span className="user">[✔]</span> Token is valid! Challenge has been
-            retrieved
+            <span className="user">[X]</span> Token is invalid. Please enter a
+            valid token!
           </p>
         );
-        // Store the corId in the state
-        setCorId(response.data.corId);
-      } catch (error) {
-        console.error("Error fetching challenge associated with token:", error);
-        // Handle errors as needed
+        setOutput(newOutput);
       }
     } else if (input === "status") {
       try {
@@ -138,16 +145,27 @@ const ParticipantTerminal = () => {
                 Challenge is retrieved and here are your details! All the best!{" "}
               </p>
               <p className="input-text-custom commands">
-                <span className="user">[✔]</span> SSH Key: {sshKeyResponse.slice(0, 10) + "..."}
-                <BiCopy className="cursor-pointer" onClick={_ => handleCopy(sshKeyResponse, "SSH Key")} />
+                <span className="user">[✔]</span> SSH Key:{" "}
+                {sshKeyResponse.slice(0, 10) + "..."}
+                <BiCopy
+                  className="cursor-pointer"
+                  onClick={(_) => handleCopy(sshKeyResponse, "SSH Key")}
+                />
               </p>
               <p className="input-text-custom commands">
                 <span className="user">[✔]</span> Port: {portResponse}
-                <BiCopy className="cursor-pointer" onClick={_ => handleCopy(portResponse, "Port")} />
+                <BiCopy
+                  className="cursor-pointer"
+                  onClick={(_) => handleCopy(portResponse, "Port")}
+                />
               </p>
               <p className="input-text-custom commands">
-                <span className="user">[✔]</span> IP Address: {ipAddressResponse}
-                <BiCopy className="cursor-pointer" onClick={_ => handleCopy(ipAddressResponse, "IP")} />
+                <span className="user">[✔]</span> IP Address:{" "}
+                {ipAddressResponse}
+                <BiCopy
+                  className="cursor-pointer"
+                  onClick={(_) => handleCopy(ipAddressResponse, "IP")}
+                />
               </p>
             </div>
           );
@@ -190,7 +208,7 @@ const ParticipantTerminal = () => {
           <div key={index} className="history">
             <span>
               <span className="commands">
-                creator
+                participant
                 <span className="symbols">@</span>
                 <span className="user">cob.quest:</span>
                 <span className="symbols">~$ </span>
@@ -210,11 +228,11 @@ const ParticipantTerminal = () => {
     <div className="terminal">
       {/* {renderOutput()} */}
       <span className="commands">
-        creator
+        participant
         <span className="symbols">@</span>
         <span className="user">cob.quest:</span>
         <span className="symbols">~$</span>
-        <span className="commands"> welcome@creator</span>
+        <span className="commands"> welcome@participant</span>
       </span>
       <p>
         enter your challenge token using '
@@ -228,7 +246,7 @@ const ParticipantTerminal = () => {
       {renderHistory()}
       <div className="terminal-spacing">
         <span className="commands">
-          creator
+          participant
           <span className="symbols">@</span>
           <span className="user">cob.quest:</span>
           <span className="symbols">~$ </span>

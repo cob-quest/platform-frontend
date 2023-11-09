@@ -41,16 +41,12 @@ const CreateImage = () => {
     console.log("Request body:", requestBody);
 
     try {
-      const response = await axios.post(
-        "/api/v1/platform/image",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: "Basic " + btoa("test:test"), // Basic Auth
-          },
-        }
-      );
+      const response = await axios.post("/api/v1/platform/image", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: "Basic " + btoa("test:test"), // Basic Auth
+        },
+      });
       if (response.status === 200) {
         setCorId(response.data.corId);
         console.log("CorId:", response.data.corId);
@@ -107,9 +103,7 @@ const CreateImage = () => {
     } else if (input === "status") {
       if (corId) {
         try {
-          const response = await axios.get(
-            `/api/v1/platform/process/${corId}`
-          );
+          const response = await axios.get(`/api/v1/platform/process/${corId}`);
           // Process the response from the process endpoint
           console.log("Process response:", response.data);
           console.log("Process response status:", response.eventStatus);
@@ -142,25 +136,39 @@ const CreateImage = () => {
         );
       }
     } else if (input === "upload") {
-      newOutput = (
-        <div
-          className={`dropzone ${isDragActive ? "active" : ""}`}
-          {...getRootProps()}
-        >
-          <input {...getInputProps()} />
-          {isDragActive ? (
-            <p>Drop the files here...</p>
-          ) : (
-            <p>
-              Click here to upload your file(s){" "}
-              <span>
-                {" "}
-                <CursorArrowRaysIcon className="h-4 w-4" />{" "}
-              </span>{" "}
-            </p>
-          )}
-        </div>
-      );
+      console.log("Request body:", requestBody);
+      if (
+        requestBody.imageName === "someName" ||
+        requestBody.creatorName === "someCreator" ||
+        requestBody.imageTag === "someTag"
+      ) {
+        newOutput = (
+          <p>
+            <span className="user">[X]</span> Please set image name, creator
+            name, and/or image tag before uploading a file.
+          </p>
+        );
+      } else {
+        newOutput = (
+          <div
+            className={`dropzone ${isDragActive ? "active" : ""}`}
+            {...getRootProps()}
+          >
+            <input {...getInputProps()} />
+            {isDragActive ? (
+              <p>Drop the files here...</p>
+            ) : (
+              <p>
+                Click here to upload your file(s){" "}
+                <span>
+                  {" "}
+                  <CursorArrowRaysIcon className="h-4 w-4" />{" "}
+                </span>{" "}
+              </p>
+            )}
+          </div>
+        );
+      }
     } else if (input.startsWith("image-name")) {
       // Handle 'image-name' input
       const name = input.replace("image-name", "").trim();
@@ -288,12 +296,17 @@ const CreateImage = () => {
       </span>
       <p>
         to create an image, use the commands: <br /> <br />
-        <span className="commands">image-name &lt;image-name&gt;</span> to set image name  <br />
-        <span className="commands">image-tag &lt;image-tag&gt;</span> to set image tag  <br />
-        <span className="commands">creator-name &lt;creator-name&gt;</span> to set creator name  <br />
-        <span className="commands">upload</span> to upload an image zip file<br />
+        <span className="commands">image-name &lt;image-name&gt;</span> to set
+        image name <br />
+        <span className="commands">image-tag &lt;image-tag&gt;</span> to set
+        image tag <br />
+        <span className="commands">creator-name &lt;creator-name&gt;</span> to
+        set creator name <br />
+        <span className="commands">upload</span> to upload an image zip file
         <br />
-        <span className="commands">status</span> to check the status of image creation <br />
+        <br />
+        <span className="commands">status</span> to check the status of image
+        creation <br />
         <span className="commands">cd</span> to return to the previous page
       </p>
 

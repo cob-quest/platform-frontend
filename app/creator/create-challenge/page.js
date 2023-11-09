@@ -53,16 +53,6 @@ const CreatorTerminal = () => {
         console.log("Response Data:", responseData);
         console.log("Response Status:", responseStatus);
 
-        // const imageNames = responseData.map((image) => image.imageName);
-        // setImageNames(imageNames);
-        // console.log("Image names:", imageNames);
-        // newOutput = (
-        //   <div>
-        //     {imageNames.map((name, index) => (
-        //       <p key={index}>{name}</p>
-        //     ))}
-        //   </div>
-        // );
         const imagesData = responseData.map((image) => ({
           name: image.imageName,
           tag: image.imageTag,
