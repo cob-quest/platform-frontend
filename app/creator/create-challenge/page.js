@@ -38,14 +38,11 @@ const CreatorTerminal = () => {
       newOutput = <Help />;
     } else if (input === "ls") {
       try {
-        const response = await axios.get(
-          "/api/v1/platform/image",
-          {
-            headers: {
-              Authorization: "Basic " + btoa("test:test"), // Replace with your authorization token
-            },
-          }
-        );
+        const response = await axios.get("/api/v1/platform/image", {
+          headers: {
+            Authorization: "Basic " + btoa("test:test"), // Replace with your authorization token
+          },
+        });
         // Iterate through the responseData to display image names
         // Extract image names and set them in the state
         const responseData = response.data;
@@ -157,39 +154,55 @@ const CreatorTerminal = () => {
       })); // Update state
       console.log("Request body:", requestBody);
     } else if (input === "create-challenge") {
-      newOutput = (
-        <p>
-          <span className="user">[✔]</span> Challenge is getting created....
-        </p>
-      );
-      // Make a POST request to create a challenge
-      const endpoint = "/api/v1/platform/challenge";
+      if (
+        requestBody.imageName === "someimage" ||
+        requestBody.imageTag === "sometag" ||
+        requestBody.creatorName === "someCreator" ||
+        requestBody.challengeName === "someChallenge" ||
+        requestBody.duration === 0 ||
+        requestBody.participants.length === 0
+      ) {
+        newOutput = (
+          <p>
+            <span className="user">[X]</span> Please set all required fields in
+            requestBody before uploading.
+          </p>
+        );
+      } else {
+        newOutput = (
+          <p>
+            <span className="user">[✔]</span> Challenge is getting created....
+          </p>
+        );
+        // Make a POST request to create a challenge
+        const endpoint = "/api/v1/platform/challenge";
 
-      console.log("Request body:", requestBody);
-      // Axios POST request with headers
-      axios
-        .post(endpoint, requestBody, {
-          headers: {
-            Authorization: "Basic " + btoa("test:test"), // Replace with your Basic Auth token
-            "Content-Type": "application/json",
-          },
-        })
-        .then((response) => {
-          console.log("Challenge is being created:", response.data);
-          newOutput = (
-            <p className="input-text-custom commands">
-              <span className="user">[✔]</span> Challenge is being created!
-            </p>
-          );
-          // Store the corId in the state
-          setCorId(response.data.corId);
-          setOutput(newOutput);
-        })
-        .catch((error) => {
-          console.error("Error creating challenge: " + error);
-          newOutput = <p>Error creating challenge.</p>;
-          setOutput(newOutput);
-        });
+        console.log("Request body:", requestBody);
+        // Axios POST request with headers
+        axios
+          .post(endpoint, requestBody, {
+            headers: {
+              Authorization: "Basic " + btoa("test:test"), // Replace with your Basic Auth token
+              "Content-Type": "application/json",
+            },
+          })
+          .then((response) => {
+            console.log("Challenge is being created:", response.data);
+            newOutput = (
+              <p className="input-text-custom commands">
+                <span className="user">[✔]</span> Challenge is being created!
+              </p>
+            );
+            // Store the corId in the state
+            setCorId(response.data.corId);
+            setOutput(newOutput);
+          })
+          .catch((error) => {
+            console.error("Error creating challenge: " + error);
+            newOutput = <p>Error creating challenge.</p>;
+            setOutput(newOutput);
+          });
+      }
     } else if (input === "clear") {
       setHistory([]);
       setInput("");
@@ -199,9 +212,7 @@ const CreatorTerminal = () => {
       if (corId) {
         // Make a GET request to process the challenge with the stored corId
         try {
-          const response = await axios.get(
-            `/api/v1/platform/process/${corId}`
-          );
+          const response = await axios.get(`/api/v1/platform/process/${corId}`);
           // .then((response) => {
           //   const eventStatus = response.data.eventStatus;
           //   console.log("Challenge status:", eventStatus);
@@ -299,20 +310,28 @@ const CreatorTerminal = () => {
         <span className="symbols">~$</span>
         <span className="commands"> welcome@creator</span>
       </span>
+      <p>to create a challenge, use the commands:</p>
       <p>
-        to create a challenge, use the commands:
-      </p>
-      <p>
-        <span className="commands">challenge-name &lt;challenge-name&gt;</span> to set challenge name  <br />
-        <span className="commands">image-name &lt;image-name&gt;</span> to set image name  <br />
-        <span className="commands">image-tag &lt;image-tag&gt;</span> to set image tag  <br />
-        <span className="commands">creator-name &lt;creator-name&gt;</span> to set creator name <br />
-        <span className="commands">timer &lt;timer&gt;</span> to set timer in minutes  <br />
-        <span className="commands">participants [ participants ... ]</span> to set participants   <br />
+        <span className="commands">challenge-name &lt;challenge-name&gt;</span>{" "}
+        to set challenge name <br />
+        <span className="commands">image-name &lt;image-name&gt;</span> to set
+        image name <br />
+        <span className="commands">image-tag &lt;image-tag&gt;</span> to set
+        image tag <br />
+        <span className="commands">creator-name &lt;creator-name&gt;</span> to
+        set creator name <br />
+        <span className="commands">timer &lt;timer&gt;</span> to set timer in
+        minutes <br />
+        <span className="commands">participants [ participants ... ]</span> to
+        set participants <br />
         <br />
-        <span className="commands">ls</span> to view your available images  <br />
-        <span className="commands">create-challenge</span> to create a challenge with the values set<br />
-        <span className="commands">status</span> to then check the status of challenge creation <br />
+        <span className="commands">ls</span> to view your available images{" "}
+        <br />
+        <span className="commands">create-challenge</span> to create a challenge
+        with the values set
+        <br />
+        <span className="commands">status</span> to then check the status of
+        challenge creation <br />
         <span className="commands">cd</span> to return to the previous page
       </p>
 
@@ -336,7 +355,7 @@ const CreatorTerminal = () => {
           />
         </form>
       </div>
-    </div >
+    </div>
   );
 };
 
