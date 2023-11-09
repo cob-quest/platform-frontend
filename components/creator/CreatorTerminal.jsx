@@ -33,6 +33,14 @@ const CreatorTerminal = () => {
       );
       const newTab = window.open("/creator/create-challenge", "_blank");
       newTab.focus();
+    } else if (input === "manage-challenge") {
+      newOutput = (
+        <p>
+          <span className="user">[✔]</span> Opening manage challenge....
+        </p>
+      );
+      const newTab = window.open("/creator/manage-challenge", "_blank");
+      newTab.focus();
     } else if (input === "create-image") {
       newOutput = (
         <p>
@@ -104,7 +112,8 @@ const CreatorTerminal = () => {
       </span>
       <p>
         {" "}
-        would you like to '<span className="commands">create-challenge</span>'
+        would you like to '<span className="commands">create-challenge</span>',
+        '<span className="commands">manage-challenge</span>'
         or '<span className="commands">create-image</span>'?
       </p>
       {/* <Help /> */}

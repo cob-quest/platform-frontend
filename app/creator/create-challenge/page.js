@@ -310,20 +310,21 @@ const CreatorTerminal = () => {
         <span className="commands"> welcome@creator</span>
       </span>
       <p>
-        {" "}
-
-        steps to create a challenge: '
-        <span className="commands">challenge-name</span>' -&gt; '
-        <span className="commands">ls</span> ' -&gt; '
-        <span className="commands">image-name</span>' -&gt; '
-        <span className="commands">image-tag</span>' -&gt; '
-        <span className="commands">creator-name</span>' -&gt; '
-        <span className="commands">timer</span>' -&gt; '
-        <span className="commands">participants</span>' -&gt; '
-        <span className="commands">create-challenge</span>' then check the
-        status of your image using '<span className="commands">status</span>'
+        to create a challenge, use the commands:
       </p>
-      {/* Instructions */}
+      <p>
+        <span className="commands">challenge-name &lt;challenge-name&gt;</span> to set challenge name  <br />
+        <span className="commands">image-name &lt;image-name&gt;</span> to set image name  <br />
+        <span className="commands">image-tag &lt;image-tag&gt;</span> to set image tag  <br />
+        <span className="commands">creator-name &lt;creator-name&gt;</span> to set creator name <br />
+        <span className="commands">timer &lt;timer&gt;</span> to set timer in minutes  <br />
+        <span className="commands">participants [ participants ... ]</span> to set participants   <br />
+        <br />
+        <span className="commands">ls</span> to view your available images  <br />
+        <span className="commands">create-challenge</span> to create a challenge with the values set<br />
+        <span className="commands">status</span> to then check the status of challenge creation
+      </p>
+      <br />
 
       {/* <Help /> */}
       {renderHistory()}
@@ -345,7 +346,7 @@ const CreatorTerminal = () => {
           />
         </form>
       </div>
-    </div>
+    </div >
   );
 };
 

@@ -287,12 +287,13 @@ const CreateImage = () => {
         <span className="commands"> welcome@creator</span>
       </span>
       <p>
-        {" "}
-        state your '<span className="commands">image-name</span>' and '
-        <span className="commands">image-tag</span>' '
-        <span className="commands">creator-name</span>' and select file to '
-        <span className="commands">upload</span>' then check the status of your
-        image using '<span className="commands">status</span>'
+        to create an image, use the commands: <br /> <br />
+        <span className="commands">image-name &lt;image-name&gt;</span> to set image name  <br />
+        <span className="commands">image-tag &lt;image-tag&gt;</span> to set image tag  <br />
+        <span className="commands">creator-name &lt;creator-name&gt;</span> to set creator name  <br />
+        <span className="commands">upload</span> to upload an image zip file<br />
+        <br />
+        <span className="commands">status</span> to check the status of image creation
       </p>
 
       {/* <Help /> */}

@@ -14,8 +14,14 @@ export default function MainTerminal() {
     setInput(e.target.value);
   };
 
+  const scrollToBottom = () => {
+    this.el.scrollIntoView({ behavior: 'smooth' });
+  }
+
+
   const handleFormSubmit = (e) => {
     e.preventDefault();
+    scrollToBottom()
     setOutput("");
 
     // Process input command
@@ -58,7 +64,7 @@ export default function MainTerminal() {
       setInput("");
       return;
     } else if (input === "cd") {
-      
+
     } else {
       newOutput = (
         <p>
@@ -134,6 +140,7 @@ export default function MainTerminal() {
           />
         </form>
       </div>
+      <div ref={el => { this.el = el; }} />
     </div>
   );
 }
